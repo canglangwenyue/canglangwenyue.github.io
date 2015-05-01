@@ -1,0 +1,982 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 | Wenyue‘s Blog</title>
+  <meta name="author" content="Wenyue">
+  
+  <meta name="description" content="java web android">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Wenyue‘s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Wenyue‘s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-368771XX-X']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+<body>
+  <header id="header" class='normal_mode'>
+    <nav id="main-nav">
+  <ul class='container'>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+  </header>
+  <div id="content" class="container">
+    <div id="cover">
+	<div id="profile" alt="http://ww1.sinaimg.cn/large/6cea169fjw1edgyzma1xcj21kw16ohba.jpg">
+		<a href="/">
+			<div class="logo">
+				<img src="/logo.png" alt="Profile Picture">
+			</div>
+			<div id="title">Wenyue‘s Blog</div>
+		</a>
+
+		
+			<div id="subtitle">他年我若为青帝，抱死桃花一处开!</div>
+		
+		 <ul class="my-socials">
+  
+  <li>
+  	<a href="https://github.com/canglangwenyue" class="github" target="_blank">
+  		<i class="fa fa-github"></i>
+  	</a>
+  </li>
+  
+  <li>
+  	<a href="http://weibo.com/u/5578954920" class="weibo" target="_blank">
+  		<i class="fa fa-weibo"></i>
+  	</a>
+  </li>
+  
+ 
+ <li>
+   	<a href="mailto:canglangwenyue@icloud.com" class="email" target="_blank" title="Email Me">
+  		<i class="fa fa-envelope"></i>
+  	</a>
+ </li>
+ 
+</ul>
+	</div>
+</div>
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2014-11-23T15:26:08.000Z"><a href="/2014/11/23/android-studio-module添加最新的comandroidsupportappcompat-v72100依赖报错/">周日, 11月 23 2014, 11:26:08 晚上</a></time>
+
+  
+    <h1 class="title"><a href="/2014/11/23/android-studio-module添加最新的comandroidsupportappcompat-v72100依赖报错/">android studio module添加最新的com.android.support:appcompat-v7:21.0.0依赖报错</a></h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <p>我的开发平台是Mac，测试机是MX3(API 19 android 4.4.4),我不确定其他平台是否出现该问题，所以提前说明一下，免得误人子弟。</p>
+<pre><code>今天再使用自定义<span class="tag">ActionBar</span>的时候，出现了一个很奇葩的错误，就是我为自己的<span class="tag">module</span>添加了最新的<span class="rule"><span class="attribute">com.android.support</span>:<span class="value">appcompat-v7:<span class="number">21.0</span>.<span class="number">0</span>依赖后，在Activity中使用  
+final ActionBar actionBar = <span class="function">getActionBar</span>()</span></span>;
+<span class="tag">actionBar</span><span class="class">.show</span>();
+来获取<span class="tag">ActionBar</span>时，抛出了<span class="tag">NullPointerException</span>异常，这让我百思不得其解。这在之前使用一直没用问题啊。。。。。于是，各种百度<span class="tag">google</span>，但是并未发现类似问题(我用了最新的<span class="tag">support</span>包)。最后，人品爆发，在<span class="tag">StackOverFlow</span>上找到了类似的问题，后来我意识到可能是     <span class="rule"><span class="attribute">com.android.support</span>:<span class="value">appcompat-v7:<span class="number">21.0</span>.<span class="number">0</span>版本太高，导致在android <span class="number">5.0</span>以下的sdk导致不兼容问题。估计，google的脑袋是被枪打了把，话说support包本就是用来做兼容的吧，在这个版本竟然成了导致不兼容的原因。。。。。</span></span>
+</code></pre><p>错误原因分析如下：<br>    在module的build.gradle文件里，如果用默认的自动依赖处理方式，如图所示：<br>    <img src="http://cl.ly/image/2b1E0c133p3d/supportv7.png" alt="Alt text"><br>编译时系统就会去依赖最新版的support：appcompat-v7:21.0.0 。按照之前的经验来说是不因该有问题的，但是据我的理解，目前appcompat-v7:21.0.0须使用android 5.0版本的build tool，而且build出来的程序只能在Android 5.0下运行，真屌啊。。。。我们4.4.4的用户混不下去了么？？？<br>所以解决方法也很简单：就是把appcompat-v7:21.0.0改为appcompat-v7:19.+<br>如下所示：</p>
+<pre><code><span class="keyword">dependencies</span> {
+<span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])
+<span class="keyword">compile</span> <span class="keyword">project</span>(<span class="string">':Library'</span>)
+<span class="keyword">compile</span> <span class="string">'com.android.support:support-v4:21.0.0'</span>
+<span class="keyword">compile</span> <span class="string">'com.android.support:appcompat-v7:19.+'</span>
+}
+</code></pre><p>PS: 发现国内论坛并未有人记载过此问题，所以我来记录一下，权当备忘录了。其中发了很多牢骚，还请见谅，因为这个问题耽误了我三个多小时。毕竟自己实力太菜啊，哈哈，菜鸟的高手养成计划已经开始了。</p>
+
+      
+    </div>
+    <footer>
+      
+        <div class="alignleft">
+            <a href="/2014/11/23/android-studio-module添加最新的comandroidsupportappcompat-v72100依赖报错/#more" class="more-link"><i class="fa fa-chevron-right"></i>Read More</a>
+        </div>
+        
+        
+          <div class="alignright"> 
+            <a href="http://canglangwenyue.com/2014/11/23/android-studio-module添加最新的comandroidsupportappcompat-v72100依赖报错/#comment" class="comment-link">
+              <i class="fa fa-comments"></i><span class="ds-thread-count" data-thread-key="/2014/11/23/android-studio-module添加最新的comandroidsupportappcompat-v72100依赖报错/">&nbsp;
+              </span>
+            </a>
+          </div>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2014-11-17T14:51:04.000Z"><a href="/2014/11/17/android-listview-item点击展开/">周一, 11月 17 2014, 10:51:04 晚上</a></time>
+
+  
+    <h1 class="title"><a href="/2014/11/17/android-listview-item点击展开/">android listview item点击展开</a></h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <pre><code>最近做项目真是头疼呢？之前想用<span class="variable">ListViewAnnotation</span>来着，就是可以实现类似于<span class="function_or_atom">android</span> 通知栏滑动删除的效果。好像是一位大牛自己一个人写的吧。我在这里首先向他致敬。不过，话说回来，实现原理也是比较易于理解的，就是检测你的滑动距离以及速度，再作出判断，进行操作。具体大家参考下<span class="variable">Google</span> <span class="function_or_atom">keep</span>的两种列表模式下滑动删除的操作就理解类。
+
+非常不幸的事，我再布局中用了<span class="function_or_atom">fragment</span>和<span class="function_or_atom">biewpager</span>，所以产生了手势冲突，我为此改写了<span class="function_or_atom">library</span>里的手势操作检测方法，最后勉强改出来的。但是<span class="exclamation_mark">!</span><span class="exclamation_mark">!</span><span class="exclamation_mark">!</span><span class="exclamation_mark">!</span>效果实在惨不忍睹，只好作罢，最后，思来想去，我决定使用<span class="function_or_atom">listview</span> <span class="function_or_atom">item</span>点击展开来实现我想要的效果。
+</code></pre><p>好吧，废话说了很多，终于要进入正题了。<br>首先补充三点知识：</p>
+<p>第一点：</p>
+<pre><code>getLayoutParams<span class="literal">()</span>方法和setLayoutParams<span class="literal">()</span>用法
+首先，我们利用getLayoutParams<span class="literal">()</span>来获得指定控件的<span class="type">LayoutParams</span>。例如：
+<span class="type">LinearLayout</span>.<span class="type">LayoutParams</span> lp = (<span class="type">RelativeLayout</span>.<span class="type">LayoutParams</span>) deletButton.getLayoutParams<span class="literal">()</span>;
+
+然后，我们可以为deleteButton设置layoutparams属性，例如：
+    lp.width = btnWidth;
+    lp.leftMargin = <span class="number">10</span>;
+最后，我们将设置好的layoutparams属性设置给指定的控件：        deletButton.setLayoutParams(lp);
+</code></pre><p>第二点：</p>
+<pre><code>public final <span class="type">int</span> getMeasuredHeight ()
+<span class="type">Added</span> <span class="keyword">in</span> <span class="type">API</span> level <span class="number">1</span>
+<span class="type">Like</span> getMeasuredHeightAndState(), but only returns the raw width component (that <span class="keyword">is</span> the <span class="literal">result</span> <span class="keyword">is</span> masked by <span class="type">MEASURED_SIZE_MASK</span>).
+
+<span class="type">Returns</span>
+<span class="type">The</span> raw measured height <span class="keyword">of</span> this view.
+public final <span class="type">int</span> getHeight ()
+<span class="type">Added</span> <span class="keyword">in</span> <span class="type">API</span> level <span class="number">1</span>
+<span class="type">Return</span> the height <span class="keyword">of</span> your view.
+
+<span class="type">Returns</span>
+<span class="type">The</span> height <span class="keyword">of</span> your view, <span class="keyword">in</span> pixels.
+getMeasuredHeight()返回的是原始测量高度，与屏幕无关，getHeight()返回的是在屏幕上显示的高度。实际上在当屏幕可以包裹内容的时候，他们的值是相等的，只有当view超出屏幕后，才能看出他们的区别。当超出屏幕后，getMeasuredHeight()等于getHeight()加上屏幕之外没有显示的高度。
+</code></pre><p>第三点：</p>
+<pre><code>MeasureSpec的使用。MeasureSpec一般出现在自定义View中，因为在自定义 view中我们经常需要重写该方法，由它来指定自定义控件在屏幕上的大小。
+protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec)
+onMeasure传入的两个参数是由上一层控件传入的大小，有多种情况，重写该方法时需要对计算控件的实际大小，然后调用<span class="function"><span class="title">setMeasuredDimension</span><span class="params">(int, int)</span></span>设置实际大小。
+
+onMeasure传入的widthMeasureSpec和heightMeasureSpec不是一般的尺寸数值，而是将模式和尺寸组合在一起的数值。我们需要通过int mode = MeasureSpec.<span class="function"><span class="title">getMode</span><span class="params">(widthMeasureSpec)</span></span>得到模式，用int size = MeasureSpec.<span class="function"><span class="title">getSize</span><span class="params">(widthMeasureSpec)</span></span>得到尺寸。
+
+mode共有三种情况，取值分别为MeasureSpec<span class="class">.UNSPECIFIED</span>, MeasureSpec<span class="class">.EXACTLY</span>, MeasureSpec.AT_MOST。
+
+MeasureSpec.EXACTLY是精确尺寸，当我们将控件的layout_width或layout_height指定为具体数值时如andorid:layout_width=<span class="string">"50dip"</span>，或者为FILL_PARENT是，都是控件大小已经确定的情况，都是精确尺寸。
+
+MeasureSpec.AT_MOST是最大尺寸，当控件的layout_width或layout_height指定为WRAP_CONTENT时，控件大小一般随着控件的子空间或内容进行变化，此时控件尺寸只要不超过父控件允许的最大尺寸即可。因此，此时的mode是AT_MOST，size给出了父控件允许的最大尺寸。
+
+MeasureSpec.UNSPECIFIED是未指定尺寸，这种情况不多，一般都是父控件是AdapterView，通过measure方法传入的模式。
+然后，我们可以调用MeasureSpec.<span class="function"><span class="title">makeMeasureSpec</span><span class="params">(int size, int mode)</span></span>来进行设置。
+</code></pre><p>好，现在先上一张demo截图，使用者可以自己进行扩充。<br><img src="http://cl.ly/image/3V2F2z0s2E3y/listviewexpand.png" alt="Alt text"><br>哈哈，效果还行吧。那个，图标略显呆萌，还请不要见笑（自己绘制的，苦逼程序员一只啊）。</p>
+<p>好，接下来，我们来看一下动效的实现。当然，先上源码。</p>
+<pre><code><span class="keyword">package</span> wenyue.expandlistview.me;
+
+<span class="keyword">import</span> android.util.Log;
+<span class="keyword">import</span> android.view.View;
+<span class="keyword">import</span> android.view.animation.Animation;
+<span class="keyword">import</span> android.view.animation.Transformation;
+<span class="keyword">import</span> android.widget.LinearLayout.LayoutParams;
+
+    <span class="javadoc">/**
+     * animation
+     * 2014年十一月十八日
+     * 苍狼问月
+     * canglangwenyue.github.io
+     *<span class="javadoctag"> @author</span> canglangwenyue
+     *
+     */</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewExpandAnimation</span> <span class="keyword">extends</span> <span class="title">Animation</span> </span>{
+
+<span class="keyword">private</span> View mAnimationView = <span class="keyword">null</span>;
+<span class="keyword">private</span> LayoutParams mViewLayoutParams = <span class="keyword">null</span>;
+<span class="keyword">private</span> <span class="keyword">int</span> mStart = <span class="number">0</span>;
+<span class="keyword">private</span> <span class="keyword">int</span> mEnd = <span class="number">0</span>;
+
+<span class="function"><span class="keyword">public</span> <span class="title">ViewExpandAnimation</span><span class="params">(View view)</span></span>{
+    animationSettings(view, <span class="number">500</span>);
+}
+
+<span class="function"><span class="keyword">public</span> <span class="title">ViewExpandAnimation</span><span class="params">(View view, <span class="keyword">int</span> duration)</span></span>{
+    animationSettings(view, duration);
+}
+
+<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">animationSettings</span><span class="params">(View view, <span class="keyword">int</span> duration)</span></span>{
+    setDuration(duration);
+    mAnimationView = view;
+    mViewLayoutParams = (LayoutParams) view.getLayoutParams();
+    mStart = mViewLayoutParams.bottomMargin;
+    mEnd = (mStart == <span class="number">0</span> ? (<span class="number">0</span> - view.getHeight()) : <span class="number">0</span>);
+    view.setVisibility(View.VISIBLE);
+}
+
+<span class="annotation">@Override</span>
+<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">applyTransformation</span><span class="params">(<span class="keyword">float</span> interpolatedTime, Transformation t)</span> </span>{
+    <span class="keyword">super</span>.applyTransformation(interpolatedTime, t);
+
+    <span class="keyword">if</span>(interpolatedTime &lt; <span class="number">1.0f</span>){
+        mViewLayoutParams.bottomMargin = mStart + (<span class="keyword">int</span>) ((mEnd - mStart) * interpolatedTime);
+        <span class="comment">// invalidate</span>
+        mAnimationView.requestLayout();
+    }<span class="keyword">else</span>{
+        mViewLayoutParams.bottomMargin = mEnd;
+        mAnimationView.requestLayout();
+        <span class="keyword">if</span>(mEnd != <span class="number">0</span>){
+            mAnimationView.setVisibility(View.GONE);
+        }
+    }
+    Log.i(<span class="string">"hehe"</span>, <span class="string">"interpolatedTime = "</span> + interpolatedTime + <span class="string">" , bottomMargin"</span> + 
+            mViewLayoutParams.bottomMargin);
+}
+
+}
+
+动效实现的代码不多，setDuration(duration)设置动效的持续时间。之后调用RelitaveLayout.bottomMargin;对于该属性developer文档解释为The bottom margin in pixels of the child.
+mAnimationView.requestLayout();该方法内部会调用Object.layout(...)方法，来重会布局。
+</code></pre><p>至于，listview adapter的重写，就比较简单了。所以，不再贴出全部源码。只说一下需要注意的地方。<br>首先，你需要在getView(…)中加载自定义listview 的item布局文件：</p>
+<pre><code><span class="variable">convertView =</span> myInflater.inflate(R.layout.expand_item, <span class="constant">null</span>);
+</code></pre><p>接下来，贴出相应布局文件代码：</p>
+<pre><code>&lt;?xml <span class="variable">version=</span><span class="string">"1.0"</span> <span class="variable">encoding=</span><span class="string">"utf-8"</span>?&gt;
+&lt;LinearLayout xmlns:<span class="variable">android=</span><span class="string">"http://schemas.android.com/apk/res/android"</span>
+android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+android:<span class="variable">orientation=</span><span class="string">"vertical"</span>
+android:<span class="variable">padding=</span><span class="string">"5dip"</span> &gt;
+
+&lt;RelativeLayout
+    android:<span class="variable">id=</span><span class="string">"@+id/header"</span>
+    android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+    android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span> &gt;
+
+    &lt;LinearLayout
+        android:<span class="variable">id=</span><span class="string">"@+id/appInfo"</span>
+        android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+        android:<span class="variable">layout_marginLeft=</span><span class="string">"5dip"</span>
+        android:<span class="variable">orientation=</span><span class="string">"vertical"</span> &gt;
+
+        &lt;TextView
+            android:<span class="variable">id=</span><span class="string">"@+id/tvName"</span>
+            android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+            android:<span class="variable">layout_height=</span><span class="string">"45dp"</span>
+            android:<span class="variable">gravity=</span><span class="string">"center|left"</span>
+            android:<span class="variable">text=</span><span class="string">"name"</span>
+            android:<span class="variable">textColor=</span><span class="string">"#000000"</span>
+            android:<span class="variable">layout_marginLeft=</span><span class="string">"20.0dip"</span>
+            android:<span class="variable">textSize=</span><span class="string">"16sp"</span> /&gt;
+    &lt;/LinearLayout&gt;
+&lt;/RelativeLayout&gt;
+
+&lt;RelativeLayout
+    android:<span class="variable">id=</span><span class="string">"@+id/footer"</span>
+    android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+    android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+    android:<span class="variable">background=</span><span class="string">"#ffffff"</span> &gt;
+
+
+    &lt;Button
+        android:<span class="variable">id=</span><span class="string">"@+id/btnOpen"</span>
+        android:<span class="variable">layout_width=</span><span class="string">"100dip"</span>
+        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+        android:<span class="variable">layout_alignParentLeft=</span><span class="string">"true"</span>
+        android:<span class="variable">layout_marginTop=</span><span class="string">"6dip"</span>
+        android:<span class="variable">focusable=</span><span class="string">"false"</span>
+        android:<span class="variable">textColor=</span><span class="string">"#000000"</span>
+        android:<span class="variable">background=</span><span class="string">"@drawable/editbutton"</span>
+        android:<span class="variable">textSize=</span><span class="string">"16sp"</span> /&gt;
+
+    &lt;Button
+        android:<span class="variable">id=</span><span class="string">"@+id/btnView"</span>
+        android:<span class="variable">layout_width=</span><span class="string">"100dip"</span>
+        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+        android:<span class="variable">layout_marginTop=</span><span class="string">"6dip"</span>
+        android:<span class="variable">layout_toRightOf=</span><span class="string">"@id/btnOpen"</span>
+        android:<span class="variable">focusable=</span><span class="string">"false"</span>
+        android:<span class="variable">background=</span><span class="string">"@drawable/start"</span>
+        android:<span class="variable">textColor=</span><span class="string">"#000000"</span>
+        android:<span class="variable">textSize=</span><span class="string">"16sp"</span> /&gt;
+
+    &lt;Button
+        android:<span class="variable">id=</span><span class="string">"@+id/btnWarning"</span>
+        android:<span class="variable">layout_width=</span><span class="string">"100dip"</span>
+        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+        android:<span class="variable">layout_alignParentRight=</span><span class="string">"true"</span>
+        android:<span class="variable">layout_marginTop=</span><span class="string">"6dip"</span>
+        android:<span class="variable">focusable=</span><span class="string">"false"</span>
+        android:<span class="variable">background=</span><span class="string">"@drawable/tomatodeletebutton"</span>
+        android:<span class="variable">textColor=</span><span class="string">"#000000"</span>
+        android:<span class="variable">textSize=</span><span class="string">"16sp"</span> /&gt;
+&lt;/RelativeLayout&gt;
+&lt;/LinearLayout&gt;
+</code></pre><p>我设置的是默认在activity onStart时嵌套布局中的第二个RelativeLayout布局文件的内容是被隐藏的。<br>在BaseAdapter中的设置如下：</p>
+<pre><code>RelativeLayout footer = (RelativeLayout) convertView
+                .findViewById(R.id.footer);
+        <span class="keyword">int</span> widthSpec = MeasureSpec.makeMeasureSpec(
+                (<span class="keyword">int</span>) (mLcdWidth - <span class="number">10</span> * mDensity), MeasureSpec.EXACTLY);
+        footer.measure(widthSpec, <span class="number">0</span>);
+        LinearLayout.LayoutParams <span class="keyword">params</span> = (LinearLayout.LayoutParams) footer
+                .getLayoutParams();
+        <span class="keyword">params</span>.bottomMargin = -footer.getMeasuredHeight();
+        footer.setVisibility(View.GONE);
+</code></pre><p>然后，是在onCreate方法中设置setOnItemClickListener方法，在其中设置点击item后，开始动效，再次点击则隐藏，且同一时间只有一个item可以展开(因为个人认为用户不可能在同一时间操作两个 item的隐藏操作)，代码如下：</p>
+<pre><code><span class="keyword">if</span> (mLastTouchTag != <span class="constant">null</span>) {
+                View <span class="variable">temp =</span> arg0.findViewWithTag(mLastTouchTag);
+                <span class="keyword">if</span> (temp != <span class="constant">null</span>) {
+                    View <span class="variable">footTemp =</span> temp.findViewById(R.id.footer);
+                    <span class="keyword">if</span> (footTemp != <span class="constant">null</span>
+                            &amp;&amp; (footTemp.getVisibility() != View.GONE)) {
+                        footTemp.startAnimation(new ViewExpandAnimation(
+                                footTemp));
+                    }
+                }
+            }
+            <span class="variable">mLastTouchTag =</span> (ViewHolder) v.getTag();
+            // onion555 end
+            View <span class="variable">footer =</span> v.findViewById(R.id.footer);
+            footer.startAnimation(new ViewExpandAnimation(footer));
+</code></pre><p>好吧，就写到这里吧，有什么问题，请留言。同样，在最后附上源码下载地址。<br><a href="https://github.com/canglangwenyue/AndroidDemo/tree/master/WenyueListViewDemo" target="_blank" rel="external">点此下载</a></p>
+
+      
+    </div>
+    <footer>
+      
+        <div class="alignleft">
+            <a href="/2014/11/17/android-listview-item点击展开/#more" class="more-link"><i class="fa fa-chevron-right"></i>Read More</a>
+        </div>
+        
+        
+          <div class="alignright"> 
+            <a href="http://canglangwenyue.com/2014/11/17/android-listview-item点击展开/#comment" class="comment-link">
+              <i class="fa fa-comments"></i><span class="ds-thread-count" data-thread-key="/2014/11/17/android-listview-item点击展开/">&nbsp;
+              </span>
+            </a>
+          </div>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2014-10-22T14:54:30.000Z"><a href="/2014/10/22/android-sqlite-database/">周三, 10月 22 2014, 10:54:30 晚上</a></time>
+
+  
+    <h1 class="title"><a href="/2014/10/22/android-sqlite-database/">android sqlite database</a></h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <p>好吧，现在来看一下在android里面使用sqlite数据库的一些基本操作吧。</p>
+<pre><code>对于大多数<span class="keyword">app</span>而言对数据库的要求很简单，无非CURD，仅此而已。而我个人比较喜欢将所要使用的相应数据    表封装成javabean再进行操作，这样会显得逻辑比较清晰。
+</code></pre><p>首先，我们写一个Entity：</p>
+<pre><code><span class="keyword">package</span> wenyue.justdoit.entity;
+
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">todoData</span> </span>{
+<span class="keyword">private</span> String todotadkname;
+<span class="keyword">private</span> <span class="keyword">int</span> id;
+
+<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> id;
+}
+
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>{
+    <span class="keyword">this</span>.id = id;
+}
+
+<span class="function"><span class="keyword">public</span> <span class="title">todoData</span><span class="params">()</span> </span>{
+
+}
+
+<span class="function"><span class="keyword">public</span> String <span class="title">getTodotadkname</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> todotadkname;
+}
+
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTodotadkname</span><span class="params">(String todotadkname)</span> </span>{
+    <span class="keyword">this</span>.todotadkname = todotadkname;
+}
+
+}
+</code></pre><p>在这之后呢，我们需要一个继承了SQLiteOpenHelper的工具类。在这之后，我们只需要在进行对entity进行数据库操作的时候对其进行实例化即可。</p>
+<pre><code>SQLiteOpenHelper需要重写onCreate，onUpgrade方法。android已经对sqlite数据库的操作进行了封装，所以若是你想要更深入了解数据库操作，可以参考JDBC的使用。OnCreate再首次创建数据库时调用。而我们要进行数据库操作时可用SQLiteDatabase db = this.<span class="function"><span class="title">getWritableDatabase</span><span class="params">()</span></span>。文档说该方法使db获得了写数据库的权限，感觉其实就是拿到了相应数据库的廉洁实体。
+</code></pre><p>那么下面就直接贴出继承了SQLiteOpenHelper的工具类代码吧，毕竟都是些很简单的东西，看方法名就能知道是干什么的了。</p>
+<pre><code><span class="keyword">package</span> wenyue.justdoit.util;
+
+<span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">import</span> wenyue.justdoit.entity.todoData;
+<span class="keyword">import</span> android.content.ContentValues;
+<span class="keyword">import</span> android.content.Context;
+<span class="keyword">import</span> android.database.Cursor;
+<span class="keyword">import</span> android.database.sqlite.SQLiteDatabase;
+<span class="keyword">import</span> android.database.sqlite.SQLiteOpenHelper;
+<span class="keyword">import</span> android.util.Log;
+
+<span class="keyword">public</span> class dbHelper extends SQLiteOpenHelper {
+
+<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="built_in">int</span> DATABASE_VERSION = <span class="number">1</span>;
+
+<span class="comment">// Database Name</span>
+<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> DATABASE_NAME = <span class="string">"todolistManager"</span>;
+
+<span class="comment">// tasks table name</span>
+<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> TABLE_TASKS = <span class="string">"todolist"</span>;
+
+<span class="comment">// tasks Table Columns names</span>
+<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> KEY_ID = <span class="string">"id"</span>;
+<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> KEY_TASKNAME = <span class="string">"todotadkname"</span>;
+
+<span class="keyword">public</span> dbHelper(Context context) {
+    <span class="keyword">super</span>(context, DATABASE_NAME, <span class="keyword">null</span>, DATABASE_VERSION);
+    <span class="comment">// TODO Auto-generated constructor stub</span>
+}
+
+@Override
+<span class="keyword">public</span> <span class="keyword">void</span> onCreate(SQLiteDatabase db) {
+    <span class="keyword">String</span> sql = <span class="string">"CREATE TABLE IF NOT EXISTS "</span> + TABLE_TASKS + <span class="string">" ( "</span>
+            + KEY_ID + <span class="string">" INTEGER PRIMARY KEY AUTOINCREMENT, "</span>
+            + KEY_TASKNAME + <span class="string">" TEXT"</span> + <span class="string">")"</span>;
+    db.execSQL(sql);
+    <span class="comment">// db.close();</span>
+
+}
+
+@Override
+<span class="keyword">public</span> <span class="keyword">void</span> onUpgrade(SQLiteDatabase db, <span class="built_in">int</span> oldVersion, <span class="built_in">int</span> newVersion) {
+    db.execSQL(<span class="string">"DROP TABLE IF EXISTS "</span> + TABLE_TASKS);
+    <span class="comment">// Create tables again</span>
+    onCreate(db);
+
+}
+
+<span class="keyword">public</span> <span class="keyword">void</span> <span class="built_in">save</span>(todoData testdata) {
+    SQLiteDatabase db = <span class="keyword">this</span>.getWritableDatabase();
+
+    ContentValues values = <span class="keyword">new</span> ContentValues();
+    values.put(KEY_TASKNAME, testdata.getTodotadkname());
+    db.insert(TABLE_TASKS, <span class="keyword">null</span>, values);
+    db.close();
+}
+
+<span class="keyword">public</span> List&lt;todoData&gt; getAllTasks() {
+    List&lt;todoData&gt; taskList = <span class="keyword">new</span> ArrayList&lt;todoData&gt;();
+    <span class="comment">// Select All Query</span>
+    <span class="keyword">String</span> selectQuery = <span class="string">"SELECT  * FROM "</span> + TABLE_TASKS;
+
+    SQLiteDatabase db = <span class="keyword">this</span>.getWritableDatabase();
+    Cursor <span class="built_in">cursor</span> = db.rawQuery(selectQuery, <span class="keyword">null</span>);
+
+    <span class="comment">// looping through all rows and adding to list</span>
+    <span class="keyword">if</span> (<span class="built_in">cursor</span>.moveToFirst()) {
+        do {
+            todoData task = <span class="keyword">new</span> todoData();
+            task.setId(<span class="built_in">cursor</span>.getInt(<span class="number">0</span>));
+            task.setTodotadkname(<span class="built_in">cursor</span>.getString(<span class="number">1</span>));
+            <span class="comment">// Adding contact to list</span>
+            taskList.<span class="built_in">add</span>(task);
+        } <span class="keyword">while</span> (<span class="built_in">cursor</span>.moveToNext());
+    }
+    db.close();
+    <span class="keyword">return</span> taskList;
+}
+
+<span class="keyword">public</span> <span class="built_in">int</span> checkIsExits(<span class="keyword">String</span> s) {
+    List&lt;todoData&gt; taskList = <span class="keyword">new</span> ArrayList&lt;todoData&gt;();
+    <span class="keyword">String</span> selectQuery = <span class="string">"SELECT * FROM "</span> + TABLE_TASKS + <span class="string">" WHERE "</span>
+            + KEY_TASKNAME + <span class="string">" = ?"</span>;
+
+    SQLiteDatabase db = <span class="keyword">this</span>.getWritableDatabase();
+    Cursor <span class="built_in">cursor</span> = db.rawQuery(selectQuery, <span class="keyword">new</span> <span class="keyword">String</span>[] { s });
+    <span class="keyword">if</span> (<span class="built_in">cursor</span>.moveToFirst()) {
+        do {
+            todoData task = <span class="keyword">new</span> todoData();
+            task.setId(<span class="built_in">cursor</span>.getInt(<span class="number">0</span>));
+            task.setTodotadkname(<span class="built_in">cursor</span>.getString(<span class="number">1</span>));
+            <span class="comment">// Adding contact to list</span>
+            taskList.<span class="built_in">add</span>(task);
+        } <span class="keyword">while</span> (<span class="built_in">cursor</span>.moveToNext());
+    }
+    Log.i(<span class="string">"checkIsExits"</span>, <span class="keyword">String</span>.valueOf(taskList.<span class="built_in">size</span>()));
+    db.close();
+    <span class="keyword">return</span> taskList.<span class="built_in">size</span>();
+
+}
+
+<span class="keyword">public</span> <span class="built_in">int</span> getTaskID(<span class="keyword">String</span> tsakName) {
+
+    List&lt;todoData&gt; taskList = <span class="keyword">new</span> ArrayList&lt;todoData&gt;();
+    <span class="keyword">String</span> selectQuery = <span class="string">"SELECT * FROM "</span> + TABLE_TASKS + <span class="string">" WHERE "</span>
+            + KEY_TASKNAME + <span class="string">" = ?"</span>;
+
+    SQLiteDatabase db = <span class="keyword">this</span>.getWritableDatabase();
+    Cursor <span class="built_in">cursor</span> = db.rawQuery(selectQuery, <span class="keyword">new</span> <span class="keyword">String</span>[] { tsakName });
+    <span class="keyword">if</span> (<span class="built_in">cursor</span>.moveToFirst()) {
+        do {
+            todoData task = <span class="keyword">new</span> todoData();
+            task.setId(<span class="built_in">cursor</span>.getInt(<span class="number">0</span>));
+            task.setTodotadkname(<span class="built_in">cursor</span>.getString(<span class="number">1</span>));
+            <span class="comment">// Adding contact to list</span>
+            taskList.<span class="built_in">add</span>(task);
+        } <span class="keyword">while</span> (<span class="built_in">cursor</span>.moveToNext());
+    }
+    Log.i(<span class="string">"GET_TASK_ID"</span>, <span class="keyword">String</span>.valueOf(taskList.<span class="built_in">get</span>(<span class="number">0</span>).getId()));
+    db.close();
+    <span class="keyword">return</span> taskList.<span class="built_in">get</span>(<span class="number">0</span>).getId();
+
+}
+
+<span class="keyword">public</span> <span class="keyword">void</span> updateTask(<span class="keyword">String</span> taskName, <span class="built_in">int</span> id) {
+    Log.i(<span class="string">"updateTask"</span>, <span class="keyword">String</span>.valueOf(id) + <span class="string">"-------------"</span> + taskName);
+    <span class="comment">// updating row</span>
+    SQLiteDatabase db = <span class="keyword">this</span>.getWritableDatabase();
+    ContentValues values = <span class="keyword">new</span> ContentValues();
+    values.put(KEY_TASKNAME, taskName);
+    <span class="keyword">String</span>[] args = { <span class="keyword">String</span>.valueOf(id) };
+
+    db.update(TABLE_TASKS, values, KEY_ID + <span class="string">" = ?"</span>, args);
+    Log.i(<span class="string">"UPDATESUCCESS"</span>, <span class="keyword">String</span>.valueOf(id));
+    db.close();
+}
+
+<span class="keyword">public</span> <span class="keyword">void</span> deleteTask(<span class="keyword">String</span> taskname) {
+    SQLiteDatabase db = <span class="keyword">this</span>.getWritableDatabase();
+    <span class="keyword">String</span>[] args = { <span class="keyword">String</span>.valueOf(taskname) };
+    db.delete(TABLE_TASKS, KEY_TASKNAME + <span class="string">"=?"</span>, args);
+    db.close();
+}
+
+}
+</code></pre><p>至于具体的数据处理就不用多说了吧，大家拿到实例后，调用相应的方法即可。好吧，先写这么多了。</p>
+
+      
+    </div>
+    <footer>
+      
+        <div class="alignleft">
+            <a href="/2014/10/22/android-sqlite-database/#more" class="more-link"><i class="fa fa-chevron-right"></i>Read More</a>
+        </div>
+        
+        
+          <div class="alignright"> 
+            <a href="http://canglangwenyue.com/2014/10/22/android-sqlite-database/#comment" class="comment-link">
+              <i class="fa fa-comments"></i><span class="ds-thread-count" data-thread-key="/2014/10/22/android-sqlite-database/">&nbsp;
+              </span>
+            </a>
+          </div>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2014-10-20T14:41:44.000Z"><a href="/2014/10/20/android---activity/">周一, 10月 20 2014, 10:41:44 晚上</a></time>
+
+  
+    <h1 class="title"><a href="/2014/10/20/android---activity/">android --Activity</a></h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <p>一. 再探Activity生命周期<br>为了研究activity的生命周期，简单测试代码如下。</p>
+<pre><code>package com.example.testactivity;
+
+<span class="keyword">import</span> android.app.<span class="type">Activity</span>;
+<span class="keyword">import</span> android.os.<span class="type">Bundle</span>;
+<span class="keyword">import</span> android.util.<span class="type">Log</span>;
+<span class="keyword">import</span> android.view.<span class="type">Menu</span>;
+
+public class <span class="type">MainActivity</span> extends <span class="type">Activity</span> {
+
+private <span class="keyword">static</span> final <span class="type">String</span> <span class="type">LOG_TAG</span> = <span class="string">"MainActivity"</span>;
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onCreate(<span class="type">Bundle</span> savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onDestroy() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onDestroy();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onDestroy"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onRestart() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onRestart();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onRestart"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onResume() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onResume();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onResume"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onStart() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onStart();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onStart"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onStop() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onStop();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onStop"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onPause() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onPause();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onPause"</span>);
+}
+
+@<span class="type">Override</span>
+public boolean onCreateOptionsMenu(<span class="type">Menu</span> menu) {
+    // <span class="type">Inflate</span> the menu; this adds items to the action bar <span class="keyword">if</span> it <span class="keyword">is</span> present.
+    getMenuInflater().inflate(R.menu.main, menu);
+    <span class="keyword">return</span> <span class="literal">true</span>;
+}
+
+}
+</code></pre><p>查看logcat，输出如下：<br>1.点击进入 app 后，点击back button退出：</p>
+<p><img src="http://cl.ly/image/3s2y0l003o2r/D2C19BDB-64FB-47EB-8387-8159DB9F94CF.png" alt="Alt text"></p>
+<p>2.点击进入app后，直接锁屏：<br><img src="http://cl.ly/image/0n2y1u3i470W/w.png" alt="Alt text"></p>
+<p>解锁屏幕后，activity被唤醒：<br><img src="http://cl.ly/image/0R3d082B201m/we.png" alt="Alt text"></p>
+<p>3.点击app进入 app后，点 home键退出，又进入：<br><img src="http://cl.ly/image/0v0K2a2z023L/we2.png" alt="Alt text"></p>
+<p>4.点击 home键进入后直接锁屏<br><img src="http://cl.ly/image/1d093G3z143f/E570255E-553C-431A-AC56-35E18195EA17.png" alt="Alt text"></p>
+<p>然后唤醒<br><img src="http://cl.ly/image/1U1I0Y0u263s/vgv.png" alt="Alt text"></p>
+<p>5.点击app进入后，点home键退出，然后锁屏：<br><img src="http://cl.ly/image/0z372T1y2f33/hfjkshfl.png" alt="Alt text"></p>
+<p>然后唤醒进入<br><img src="http://cl.ly/image/2O1o2x39353H/hhhhh.png" alt="Alt text"></p>
+<p><img src="http://cl.ly/image/180830443r1l/vvvvvv.png" alt="Alt text"></p>
+<p>说明：<br>1）onpause()方法在用户离开activity时被调用（这一般并不表示activity要被销毁了)。这个函数一般用来提交哪些需要保存状态的数据。</p>
+<p>2）对<activity..>标签的说明<br>除label，name，icon外还需指定一个或多个<intent-filter..>来确定该activity可以响应的intent。</intent-filter..></activity..></p>
+<p><intent-filter..>是过滤器，action说明次activity时application的main入口，<category>指定这个activity需要在系统的application 列表中列出！</category></intent-filter..></p>
+<p>注：android application要求所有应用程序组件(Activity,Service,ContentProvider,BroadcastReceiver)都必须显示进行配置.</p>
+<p>二.Activity之间的值传递</p>
+<p>1）bundle(适用于数据比较少的情况)<br>    Intent intent ＝ new Intent();<br>    intent.setClass(A.class,B.class);<br>    intent.putExtra(“name”,”value”);<br>    startActivity(intent);<br>之后再B.class中用<br>    Intent intent = new Intent();<br>    intent.getExtras()来获取</p>
+<p>2）Bundle(数据较多时使用)<br>    Intent intent ＝ new Intent(A.class,B.class));<br>    Bundle bundle ＝ new Bundle();<br>    bundle.putString(“Stringkey1”,”value1”);<br>    bundle.putString(“booleankey2”,”value2”);<br>    intent.putExtra(“key”,bundle);<br>    startActivity(intent);<br>之后再B.class中用<br>    Intent intent = new Intent();<br>    Bundle bundle = intent.getBundleExtra(“key”);<br>    bundle.getBoolean(“booleankey2”);<br>    bundle.getString(“Stringkey1”);来获取。<br>3）解析startActivityForResult<br>    适用于A跳转到B，再返回到A，同时还要保留之前的用户输入。由于由页面 A跳转到页面 B之后，A所在页面的Activity已经被Destroy。所以，如果要重新返回A并显示数据，就必须将A所在页面的Activity再次唤醒，与此同时调用某个方法来获取并显示相应的数据。<br>    所以一般用以下几个步骤来实现<br>    a.从A跳转到B时使用startActivityForResult(Intent intent, int requestcode)方法；<br>    b.再A页面的Activity重写onActivityResult方法，<br>    onActivityResult(int requestcode, int resultcode, intent data);<br>    其中参数1是提供给onActivityResult，用来确认数据是从哪个activity返回的，并且该参数和从A跳转到B时使用startActivityForResult方法的requestcode相对应。<br>    参数2由新的activity在关闭前向前面的activity返回数据时使用。<br>    参数3是一个 intent，带有从B所在Activity返回的数据。</p>
+<pre><code>A 所在页面activity实现
+onActivityResult(<span class="type">int</span> requestcode, <span class="type">int</span> resultcode, intent data)｛
+    <span class="type">String</span> <span class="literal">result</span> = data.getExtras().getString(<span class="string">"result"</span>);
+｝
+
+B所在activity实现：
+ <span class="type">Intent</span> intent ＝ new <span class="type">Intent</span>();
+
+ intent.putExtra(<span class="string">"result"</span>,<span class="string">"value"</span>);
+ B.this.<span class="type">SetResult</span>(<span class="type">RESULT_OK</span>,intent);
+ B.this.finish();
+
+
+未完待续。。。
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+好，今天接着来进一步解析<span class="type">Activity</span>的生命周期。
+</code></pre><p> 自己画了一下activity的生命周期图，感觉很糟糕的样子。。<br> <img src="http://cl.ly/image/0x2V1M0q3f2s/84BF74FC-E267-4C34-855A-7AF0E1E3A449.png" alt="Alt text"><br> 如图所示，activity的整个生命周期有四种状态，而对这四种状态的描述通常使用一下7种方法来完成。<br> Activity的四种状态分别是：</p>
+<pre><code><span class="tag">a</span><span class="class">.running</span>
+当activity运行于屏幕前台(处于activity栈的栈顶)，此时它获取了    焦点可以相应用户操作，属于running状态，同一时刻只能有一个    activity处于<span class="function"><span class="title">running</span><span class="params">(active)</span></span>状态。
+
+<span class="tag">b</span><span class="class">.paused</span>
+此时Activity已经失去焦点，但是仍然对用户可见，例如：在该activity之上有另外一个透明的    Activity或Toast，AlertDialog等弹出窗口时，该Activity则处于暂停状态。暂停的Activity仍然    是处于存活状态，（它保留着所有的状态和成员信息并保持着和窗口管理器的连接），但当此时出现system     memory不够用时，就会被系统杀掉。
+
+c<span class="class">.Stopped</span>     
+指定Activity完全被另一个Activity遮挡时，它将处于停机状态，但它仍保留着所有的状态和成员信    息。只是此时指定的Activity对用户不可见，但当此时出现system     memory不够用时，就会被系统杀掉。
+
+d<span class="class">.Dead</span>
+Activity尚未启动，或者已经被手动中止，或者已经被system回收。导致Activity处于非活动状态。
+手动中止可以在程序中调用finish方法；而被system回收，则是可能是因为内存不足。当system内存不足时，Dalvak虚拟机的内存回收规则如下：
+    first：先回收与其它Activity，Service，Intent，Receiver无关的进程（优先回收独立的        Activity）。所以，一些耗时的操作最好写成Service。
+    second：不可见（stopped）的Activity。
+    Third：Service进程（经过前两步后，内存不足时采取）。
+    Fourth：    当前正在运行的（Running）Activity。
+</code></pre><p>伴随Activity生命周期的7个方法：</p>
+<pre><code> 当Activity从一种状态进入另一种状态时system会自动调用下面相应的方法来通知用户这种变化。
+
+a.Activity第一次被实例化的时候system会调用<span class="keyword">on</span>Create()方法（整个生命周期只调用一次）来进行初始化设置：
+    为Activity提供所需布局文件；为按钮绑定监听器等静态的设置操作。
+
+b.Activity可见，但尚未获得焦点，即不能与用户进行交互时调用：<span class="keyword">on</span>Start()，
+c.Activity已经stopped之后重新被system启动时调用<span class="keyword">on</span>Restart();
+d.当Activity获得用户焦点能进行交互时system调用<span class="keyword">on</span>Resume().
+
+e.当system启动另外一个Activity时，在新的Activity启动之前被system调用来保存当前获得用户焦点的Activity中的持久数据，停止动画等。当系统而非用户自己出于回收内存而关闭了Activity。此时，用户会期望当他再次回到这个Activity时，它仍保持着上次离开时的样子，此时便调用<span class="keyword">on</span>SaveInstanceState()，该方法用来保存Activity被杀之前的状态，它在<span class="keyword">on</span>Pause之前被触发，当system为了节省内存开销销毁了该Activity（或许用户并不想销毁）时就需要重写这个方法了，当该Activity再次被实例化时会通过<span class="keyword">on</span>Create(Bundle saveInstanceState)将已经保存的临时状态数据传入。需要注意的是
+<span class="keyword">on</span>SaveInstanceState() 方法并不会经常被调用，它的默认触发条件为按下home键，按下电源键，横竖屏切换三种情况。所以我们可以通过重写<span class="keyword">on</span>SaveInstanceState() 来记录Activity的临时数据。
+而记录持久数据时，应该使用<span class="keyword">on</span>Pause()来存储。
+
+f.当Activity完全被另一个Activity覆盖不可见时system调用<span class="keyword">on</span>Stop()；
+
+g.当Activity被kill时system调用<span class="keyword">on</span>Destroy(),用来释放<span class="keyword">on</span>Create()方法中创建的资源，如结束线程等。需要注意的是和<span class="keyword">on</span>Create相对应，<span class="keyword">on</span>Destroy()方法，在Activity的整个生命周期中也只被调用一次。
+</code></pre><p>至此，关于Activity的梳理已经差不多了，最后需要注意一下的是设置Activity的android：configChanges＝“”的设置。</p>
+
+      
+    </div>
+    <footer>
+      
+        <div class="alignleft">
+            <a href="/2014/10/20/android---activity/#more" class="more-link"><i class="fa fa-chevron-right"></i>Read More</a>
+        </div>
+        
+        
+          <div class="alignright"> 
+            <a href="http://canglangwenyue.com/2014/10/20/android---activity/#comment" class="comment-link">
+              <i class="fa fa-comments"></i><span class="ds-thread-count" data-thread-key="/2014/10/20/android---activity/">&nbsp;
+              </span>
+            </a>
+          </div>
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/" class="alignleft prev"><i class="fa fa-long-arrow-left"></i>上一页</a>
+  
+  
+  <div class="clearfix"></div>
+</nav>
+
+<script src="/js/jquery.anystretch.min.js" type="text/javascript"></script>
+<script src="/js/cover.js" type="text/javascript"></script>
+
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div>
+  
+  &copy; 2015 Wenyue
+  
+</div>
+Powered by <a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a> and <a href="http://pages.github.com/" title="GitHub Pages" target="_blank" rel="external">GitHub Pages</a>
+
+<div class="clearfix"></div></footer>
+  
+<script src="/js/jquery.imagesloaded.min.js" type="text/javascript"></script>
+<script src="/js/gallery.js" type="text/javascript"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+
+
+    <script type="text/javascript">
+        (function(){
+
+            $(window).scroll(function(){
+
+                var scrollTop = $(window).scrollTop();
+                if ( scrollTop >200 ){
+                    $("#main-nav").removeClass('normal_mode').addClass('top_mode');
+                } else{
+                    $("#main-nav").removeClass('top_mode').addClass('normal_mode');
+                }
+
+            });
+
+        })();
+    </script>
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox({
+      'titlePosition': 'inside'
+    });
+  })(jQuery);
+  </script>
+
+
+
+    
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wenyue"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+
+
+<script type="text/javascript">
+  
+  $(function(){
+
+    $('.title').hover(
+      function() {      
+        $(this).stop().animate(
+          {'marginLeft': '10px'}, 200
+        );   
+      }, 
+      function() {       
+        $(this).stop().animate({'marginLeft': '0px'}, 200);      
+      
+    });   
+
+  });
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android listview item点击展开 | Wenyue‘s Blog</title>
+  <meta name="author" content="Wenyue">
+  
+  <meta name="description" content="java web android">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="android listview item点击展开"/>
+  <meta property="og:site_name" content="Wenyue‘s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Wenyue‘s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-368771XX-X']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+<body>
+  <header id="header" class='normal_mode'>
+    <nav id="main-nav">
+  <ul class='container'>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+  </header>
+  <div id="content" class="container">
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2014-11-17T14:51:04.000Z"><a href="/2014/11/17/android-listview-item点击展开/">周一, 11月 17 2014, 10:51:04 晚上</a></time>
+
+  
+    <h1 class="title">android listview item点击展开</h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <pre><code>最近做项目真是头疼呢？之前想用<span class="variable">ListViewAnnotation</span>来着，就是可以实现类似于<span class="function_or_atom">android</span> 通知栏滑动删除的效果。好像是一位大牛自己一个人写的吧。我在这里首先向他致敬。不过，话说回来，实现原理也是比较易于理解的，就是检测你的滑动距离以及速度，再作出判断，进行操作。具体大家参考下<span class="variable">Google</span> <span class="function_or_atom">keep</span>的两种列表模式下滑动删除的操作就理解类。
+
+非常不幸的事，我再布局中用了<span class="function_or_atom">fragment</span>和<span class="function_or_atom">biewpager</span>，所以产生了手势冲突，我为此改写了<span class="function_or_atom">library</span>里的手势操作检测方法，最后勉强改出来的。但是<span class="exclamation_mark">!</span><span class="exclamation_mark">!</span><span class="exclamation_mark">!</span><span class="exclamation_mark">!</span>效果实在惨不忍睹，只好作罢，最后，思来想去，我决定使用<span class="function_or_atom">listview</span> <span class="function_or_atom">item</span>点击展开来实现我想要的效果。
+</code></pre><p>好吧，废话说了很多，终于要进入正题了。<br>首先补充三点知识：</p>
+<p>第一点：</p>
+<pre><code>getLayoutParams<span class="literal">()</span>方法和setLayoutParams<span class="literal">()</span>用法
+首先，我们利用getLayoutParams<span class="literal">()</span>来获得指定控件的<span class="type">LayoutParams</span>。例如：
+<span class="type">LinearLayout</span>.<span class="type">LayoutParams</span> lp = (<span class="type">RelativeLayout</span>.<span class="type">LayoutParams</span>) deletButton.getLayoutParams<span class="literal">()</span>;
+
+然后，我们可以为deleteButton设置layoutparams属性，例如：
+    lp.width = btnWidth;
+    lp.leftMargin = <span class="number">10</span>;
+最后，我们将设置好的layoutparams属性设置给指定的控件：        deletButton.setLayoutParams(lp);
+</code></pre><p>第二点：</p>
+<pre><code>public final <span class="type">int</span> getMeasuredHeight ()
+<span class="type">Added</span> <span class="keyword">in</span> <span class="type">API</span> level <span class="number">1</span>
+<span class="type">Like</span> getMeasuredHeightAndState(), but only returns the raw width component (that <span class="keyword">is</span> the <span class="literal">result</span> <span class="keyword">is</span> masked by <span class="type">MEASURED_SIZE_MASK</span>).
+
+<span class="type">Returns</span>
+<span class="type">The</span> raw measured height <span class="keyword">of</span> this view.
+public final <span class="type">int</span> getHeight ()
+<span class="type">Added</span> <span class="keyword">in</span> <span class="type">API</span> level <span class="number">1</span>
+<span class="type">Return</span> the height <span class="keyword">of</span> your view.
+
+<span class="type">Returns</span>
+<span class="type">The</span> height <span class="keyword">of</span> your view, <span class="keyword">in</span> pixels.
+getMeasuredHeight()返回的是原始测量高度，与屏幕无关，getHeight()返回的是在屏幕上显示的高度。实际上在当屏幕可以包裹内容的时候，他们的值是相等的，只有当view超出屏幕后，才能看出他们的区别。当超出屏幕后，getMeasuredHeight()等于getHeight()加上屏幕之外没有显示的高度。
+</code></pre><p>第三点：</p>
+<pre><code>MeasureSpec的使用。MeasureSpec一般出现在自定义View中，因为在自定义 view中我们经常需要重写该方法，由它来指定自定义控件在屏幕上的大小。
+protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec)
+onMeasure传入的两个参数是由上一层控件传入的大小，有多种情况，重写该方法时需要对计算控件的实际大小，然后调用<span class="function"><span class="title">setMeasuredDimension</span><span class="params">(int, int)</span></span>设置实际大小。
+
+onMeasure传入的widthMeasureSpec和heightMeasureSpec不是一般的尺寸数值，而是将模式和尺寸组合在一起的数值。我们需要通过int mode = MeasureSpec.<span class="function"><span class="title">getMode</span><span class="params">(widthMeasureSpec)</span></span>得到模式，用int size = MeasureSpec.<span class="function"><span class="title">getSize</span><span class="params">(widthMeasureSpec)</span></span>得到尺寸。
+
+mode共有三种情况，取值分别为MeasureSpec<span class="class">.UNSPECIFIED</span>, MeasureSpec<span class="class">.EXACTLY</span>, MeasureSpec.AT_MOST。
+
+MeasureSpec.EXACTLY是精确尺寸，当我们将控件的layout_width或layout_height指定为具体数值时如andorid:layout_width=<span class="string">"50dip"</span>，或者为FILL_PARENT是，都是控件大小已经确定的情况，都是精确尺寸。
+
+MeasureSpec.AT_MOST是最大尺寸，当控件的layout_width或layout_height指定为WRAP_CONTENT时，控件大小一般随着控件的子空间或内容进行变化，此时控件尺寸只要不超过父控件允许的最大尺寸即可。因此，此时的mode是AT_MOST，size给出了父控件允许的最大尺寸。
+
+MeasureSpec.UNSPECIFIED是未指定尺寸，这种情况不多，一般都是父控件是AdapterView，通过measure方法传入的模式。
+然后，我们可以调用MeasureSpec.<span class="function"><span class="title">makeMeasureSpec</span><span class="params">(int size, int mode)</span></span>来进行设置。
+</code></pre><p>好，现在先上一张demo截图，使用者可以自己进行扩充。<br><img src="http://cl.ly/image/3V2F2z0s2E3y/listviewexpand.png" alt="Alt text"><br>哈哈，效果还行吧。那个，图标略显呆萌，还请不要见笑（自己绘制的，苦逼程序员一只啊）。</p>
+<p>好，接下来，我们来看一下动效的实现。当然，先上源码。</p>
+<pre><code><span class="keyword">package</span> wenyue.expandlistview.me;
+
+<span class="keyword">import</span> android.util.Log;
+<span class="keyword">import</span> android.view.View;
+<span class="keyword">import</span> android.view.animation.Animation;
+<span class="keyword">import</span> android.view.animation.Transformation;
+<span class="keyword">import</span> android.widget.LinearLayout.LayoutParams;
+
+    <span class="javadoc">/**
+     * animation
+     * 2014年十一月十八日
+     * 苍狼问月
+     * canglangwenyue.github.io
+     *<span class="javadoctag"> @author</span> canglangwenyue
+     *
+     */</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewExpandAnimation</span> <span class="keyword">extends</span> <span class="title">Animation</span> </span>{
+
+<span class="keyword">private</span> View mAnimationView = <span class="keyword">null</span>;
+<span class="keyword">private</span> LayoutParams mViewLayoutParams = <span class="keyword">null</span>;
+<span class="keyword">private</span> <span class="keyword">int</span> mStart = <span class="number">0</span>;
+<span class="keyword">private</span> <span class="keyword">int</span> mEnd = <span class="number">0</span>;
+
+<span class="function"><span class="keyword">public</span> <span class="title">ViewExpandAnimation</span><span class="params">(View view)</span></span>{
+    animationSettings(view, <span class="number">500</span>);
+}
+
+<span class="function"><span class="keyword">public</span> <span class="title">ViewExpandAnimation</span><span class="params">(View view, <span class="keyword">int</span> duration)</span></span>{
+    animationSettings(view, duration);
+}
+
+<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">animationSettings</span><span class="params">(View view, <span class="keyword">int</span> duration)</span></span>{
+    setDuration(duration);
+    mAnimationView = view;
+    mViewLayoutParams = (LayoutParams) view.getLayoutParams();
+    mStart = mViewLayoutParams.bottomMargin;
+    mEnd = (mStart == <span class="number">0</span> ? (<span class="number">0</span> - view.getHeight()) : <span class="number">0</span>);
+    view.setVisibility(View.VISIBLE);
+}
+
+<span class="annotation">@Override</span>
+<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">applyTransformation</span><span class="params">(<span class="keyword">float</span> interpolatedTime, Transformation t)</span> </span>{
+    <span class="keyword">super</span>.applyTransformation(interpolatedTime, t);
+
+    <span class="keyword">if</span>(interpolatedTime &lt; <span class="number">1.0f</span>){
+        mViewLayoutParams.bottomMargin = mStart + (<span class="keyword">int</span>) ((mEnd - mStart) * interpolatedTime);
+        <span class="comment">// invalidate</span>
+        mAnimationView.requestLayout();
+    }<span class="keyword">else</span>{
+        mViewLayoutParams.bottomMargin = mEnd;
+        mAnimationView.requestLayout();
+        <span class="keyword">if</span>(mEnd != <span class="number">0</span>){
+            mAnimationView.setVisibility(View.GONE);
+        }
+    }
+    Log.i(<span class="string">"hehe"</span>, <span class="string">"interpolatedTime = "</span> + interpolatedTime + <span class="string">" , bottomMargin"</span> + 
+            mViewLayoutParams.bottomMargin);
+}
+
+}
+
+动效实现的代码不多，setDuration(duration)设置动效的持续时间。之后调用RelitaveLayout.bottomMargin;对于该属性developer文档解释为The bottom margin in pixels of the child.
+mAnimationView.requestLayout();该方法内部会调用Object.layout(...)方法，来重会布局。
+</code></pre><p>至于，listview adapter的重写，就比较简单了。所以，不再贴出全部源码。只说一下需要注意的地方。<br>首先，你需要在getView(…)中加载自定义listview 的item布局文件：</p>
+<pre><code><span class="variable">convertView =</span> myInflater.inflate(R.layout.expand_item, <span class="constant">null</span>);
+</code></pre><p>接下来，贴出相应布局文件代码：</p>
+<pre><code>&lt;?xml <span class="variable">version=</span><span class="string">"1.0"</span> <span class="variable">encoding=</span><span class="string">"utf-8"</span>?&gt;
+&lt;LinearLayout xmlns:<span class="variable">android=</span><span class="string">"http://schemas.android.com/apk/res/android"</span>
+android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+android:<span class="variable">orientation=</span><span class="string">"vertical"</span>
+android:<span class="variable">padding=</span><span class="string">"5dip"</span> &gt;
+
+&lt;RelativeLayout
+    android:<span class="variable">id=</span><span class="string">"@+id/header"</span>
+    android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+    android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span> &gt;
+
+    &lt;LinearLayout
+        android:<span class="variable">id=</span><span class="string">"@+id/appInfo"</span>
+        android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+        android:<span class="variable">layout_marginLeft=</span><span class="string">"5dip"</span>
+        android:<span class="variable">orientation=</span><span class="string">"vertical"</span> &gt;
+
+        &lt;TextView
+            android:<span class="variable">id=</span><span class="string">"@+id/tvName"</span>
+            android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+            android:<span class="variable">layout_height=</span><span class="string">"45dp"</span>
+            android:<span class="variable">gravity=</span><span class="string">"center|left"</span>
+            android:<span class="variable">text=</span><span class="string">"name"</span>
+            android:<span class="variable">textColor=</span><span class="string">"#000000"</span>
+            android:<span class="variable">layout_marginLeft=</span><span class="string">"20.0dip"</span>
+            android:<span class="variable">textSize=</span><span class="string">"16sp"</span> /&gt;
+    &lt;/LinearLayout&gt;
+&lt;/RelativeLayout&gt;
+
+&lt;RelativeLayout
+    android:<span class="variable">id=</span><span class="string">"@+id/footer"</span>
+    android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span>
+    android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+    android:<span class="variable">background=</span><span class="string">"#ffffff"</span> &gt;
+
+
+    &lt;Button
+        android:<span class="variable">id=</span><span class="string">"@+id/btnOpen"</span>
+        android:<span class="variable">layout_width=</span><span class="string">"100dip"</span>
+        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+        android:<span class="variable">layout_alignParentLeft=</span><span class="string">"true"</span>
+        android:<span class="variable">layout_marginTop=</span><span class="string">"6dip"</span>
+        android:<span class="variable">focusable=</span><span class="string">"false"</span>
+        android:<span class="variable">textColor=</span><span class="string">"#000000"</span>
+        android:<span class="variable">background=</span><span class="string">"@drawable/editbutton"</span>
+        android:<span class="variable">textSize=</span><span class="string">"16sp"</span> /&gt;
+
+    &lt;Button
+        android:<span class="variable">id=</span><span class="string">"@+id/btnView"</span>
+        android:<span class="variable">layout_width=</span><span class="string">"100dip"</span>
+        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+        android:<span class="variable">layout_marginTop=</span><span class="string">"6dip"</span>
+        android:<span class="variable">layout_toRightOf=</span><span class="string">"@id/btnOpen"</span>
+        android:<span class="variable">focusable=</span><span class="string">"false"</span>
+        android:<span class="variable">background=</span><span class="string">"@drawable/start"</span>
+        android:<span class="variable">textColor=</span><span class="string">"#000000"</span>
+        android:<span class="variable">textSize=</span><span class="string">"16sp"</span> /&gt;
+
+    &lt;Button
+        android:<span class="variable">id=</span><span class="string">"@+id/btnWarning"</span>
+        android:<span class="variable">layout_width=</span><span class="string">"100dip"</span>
+        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span>
+        android:<span class="variable">layout_alignParentRight=</span><span class="string">"true"</span>
+        android:<span class="variable">layout_marginTop=</span><span class="string">"6dip"</span>
+        android:<span class="variable">focusable=</span><span class="string">"false"</span>
+        android:<span class="variable">background=</span><span class="string">"@drawable/tomatodeletebutton"</span>
+        android:<span class="variable">textColor=</span><span class="string">"#000000"</span>
+        android:<span class="variable">textSize=</span><span class="string">"16sp"</span> /&gt;
+&lt;/RelativeLayout&gt;
+&lt;/LinearLayout&gt;
+</code></pre><p>我设置的是默认在activity onStart时嵌套布局中的第二个RelativeLayout布局文件的内容是被隐藏的。<br>在BaseAdapter中的设置如下：</p>
+<pre><code>RelativeLayout footer = (RelativeLayout) convertView
+                .findViewById(R.id.footer);
+        <span class="keyword">int</span> widthSpec = MeasureSpec.makeMeasureSpec(
+                (<span class="keyword">int</span>) (mLcdWidth - <span class="number">10</span> * mDensity), MeasureSpec.EXACTLY);
+        footer.measure(widthSpec, <span class="number">0</span>);
+        LinearLayout.LayoutParams <span class="keyword">params</span> = (LinearLayout.LayoutParams) footer
+                .getLayoutParams();
+        <span class="keyword">params</span>.bottomMargin = -footer.getMeasuredHeight();
+        footer.setVisibility(View.GONE);
+</code></pre><p>然后，是在onCreate方法中设置setOnItemClickListener方法，在其中设置点击item后，开始动效，再次点击则隐藏，且同一时间只有一个item可以展开(因为个人认为用户不可能在同一时间操作两个 item的隐藏操作)，代码如下：</p>
+<pre><code><span class="keyword">if</span> (mLastTouchTag != <span class="constant">null</span>) {
+                View <span class="variable">temp =</span> arg0.findViewWithTag(mLastTouchTag);
+                <span class="keyword">if</span> (temp != <span class="constant">null</span>) {
+                    View <span class="variable">footTemp =</span> temp.findViewById(R.id.footer);
+                    <span class="keyword">if</span> (footTemp != <span class="constant">null</span>
+                            &amp;&amp; (footTemp.getVisibility() != View.GONE)) {
+                        footTemp.startAnimation(new ViewExpandAnimation(
+                                footTemp));
+                    }
+                }
+            }
+            <span class="variable">mLastTouchTag =</span> (ViewHolder) v.getTag();
+            // onion555 end
+            View <span class="variable">footer =</span> v.findViewById(R.id.footer);
+            footer.startAnimation(new ViewExpandAnimation(footer));
+</code></pre><p>好吧，就写到这里吧，有什么问题，请留言。同样，在最后附上源码下载地址。<br><a href="https://github.com/canglangwenyue/AndroidDemo/tree/master/WenyueListViewDemo" target="_blank" rel="external">点此下载</a></p>
+
+      
+    </div>
+    <footer>
+      
+          
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <span class="jiathis_txt">分享到：</span>
+  <a class="jiathis_button_weixin">微信</a>
+  <a class="jiathis_button_tsina">新浪微博</a>
+  <a class="jiathis_button_renren">人人网</a>
+  <a class="jiathis_button_qzone">QQ空间</a>
+  <a class="jiathis_button_douban">豆瓣</a>
+  <a class="jiathis_button_pocket">Pocket</a>
+  <a href="http://www.jiathis.com/share?uid=901656" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=901656" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          <div class="clearfix"></div>
+          <nav id="pagination">
+  
+    <a href="/2014/11/23/android-studio-module添加最新的comandroidsupportappcompat-v72100依赖报错/" class="alignleft prev"><i class="fa fa-long-arrow-left"></i>Next</a>
+  
+  
+    <a href="/2014/10/22/android-sqlite-database/" class="alignright next">Prev<i class="fa fa-long-arrow-right"></i></a>
+  
+  <div class="clearfix"></div>
+</nav>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-thread-key="/2014/11/17/android-listview-item点击展开/"></div>
+<!-- Duoshuo Comment END -->
+  
+</section>
+
+
+
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div>
+  
+  &copy; 2015 Wenyue
+  
+</div>
+Powered by <a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a> and <a href="http://pages.github.com/" title="GitHub Pages" target="_blank" rel="external">GitHub Pages</a>
+
+<div class="clearfix"></div></footer>
+  
+<script src="/js/jquery.imagesloaded.min.js" type="text/javascript"></script>
+<script src="/js/gallery.js" type="text/javascript"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+
+
+    <script type="text/javascript">
+        (function(){
+
+            $(window).scroll(function(){
+
+                var scrollTop = $(window).scrollTop();
+                if ( scrollTop >200 ){
+                    $("#main-nav").removeClass('normal_mode').addClass('top_mode');
+                } else{
+                    $("#main-nav").removeClass('top_mode').addClass('normal_mode');
+                }
+
+            });
+
+        })();
+    </script>
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox({
+      'titlePosition': 'inside'
+    });
+  })(jQuery);
+  </script>
+
+
+
+    
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wenyue"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+
+
+<script type="text/javascript">
+  
+  $(function(){
+
+    $('.title').hover(
+      function() {      
+        $(this).stop().animate(
+          {'marginLeft': '10px'}, 200
+        );   
+      }, 
+      function() {       
+        $(this).stop().animate({'marginLeft': '0px'}, 200);      
+      
+    });   
+
+  });
+
+</script>
+
+
+</body>
+</html>

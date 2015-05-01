@@ -1,0 +1,397 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android Intent 机制 | Wenyue‘s Blog</title>
+  <meta name="author" content="Wenyue">
+  
+  <meta name="description" content="java web android">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="android Intent 机制"/>
+  <meta property="og:site_name" content="Wenyue‘s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Wenyue‘s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-368771XX-X']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+<body>
+  <header id="header" class='normal_mode'>
+    <nav id="main-nav">
+  <ul class='container'>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+  </header>
+  <div id="content" class="container">
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2015-03-04T02:04:58.000Z"><a href="/2015/03/04/android-intent-机制/">周三, 3月 4 2015, 10:04:58 上午</a></time>
+
+  
+    <h1 class="title">android Intent 机制</h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <p>一. Intent 对象</p>
+<p>1.1什么是Intent</p>
+<p>首先呢，大家要明确一点android时基于组件的应用开发。所以，开发过程中我们不仅要寻找和构造符合需求的组件，更重要的是，要将组件有机的连接起来，互相交换信息，这样才能构建出我们最终想要的应用程序。所以，intent便是用来组件之间连接并通信的模式。</p>
+<p>1.2.Intent 的构成</p>
+<pre><code>(<span class="number">1</span>) <span class="keyword">Action</span>项(谓语)
+在<span class="type">Intent</span>对象中用<span class="keyword">Action</span>来表达动作，当调用组件指定一个<span class="keyword">Action</span>后，执行组件就会按照这个<span class="keyword">Action</span>的指示执行相关操作；
+(<span class="number">2</span>) <span class="type">Data</span>项(宾语)
+当调用组件(主语)发起请求时，如果该组件有明确的数据对象，通常就会用<span class="type">Data</span>项来进行存储。
+(<span class="number">3</span>) <span class="keyword">Type</span>项
+<span class="type">Data</span>用于描述具体操作目标的需求，例如：“我（调用组件）喝（<span class="keyword">Action</span>动作）王老吉（<span class="type">Data</span>项）”。而<span class="keyword">Type</span>就用于表示“我喝饮料”。即：<span class="type">Data</span>用于特指，而<span class="keyword">Type</span>用于泛指。
+(<span class="number">4</span>) Category项
+Category用于表述在特定场合下的约束条件。例如：“当我口渴的时候，我喝王老吉”，说明“口渴了”是“喝王老吉”这个<span class="type">Intent</span>的条件。
+(<span class="number">5</span>) Component项
+Component项指的是目标组件的类型信息。制定了Component后，<span class="type">Intent</span>就变成了单纯的信息载体只负责传递消息和数据。
+(<span class="number">6</span>) Extras项
+Extras项是<span class="type">Intent</span>数据传输的载体负责将数据从调用组件传递到实现组件。
+(<span class="number">7</span>)    Flags 项
+Flags是一个整型数，是调用组件指定组件管理服务构造实现组件的方式。
+</code></pre><p> 1.3.Intent 的分类</p>
+<pre><code>(<span class="number">1</span>) 在意图机制中，组件管理服务负责接受和分析<span class="type">Intent</span>对象，为调用组件选择最合适的实现组件。从实现组件的选择来看，<span class="type">Intent</span>对象可以分成两类：精确描述的 <span class="type">Intent</span>(Explicit <span class="type">Intent</span>－显示<span class="type">Intent</span>)和模糊描述的<span class="type">Intent</span>(<span class="type">Implicit</span> <span class="type">Intent</span> －隐式<span class="type">Intent</span>)。
+</code></pre><p>1.4 Intent Filter 对象</p>
+<pre><code><span class="type">Intent</span> Filter是各个组件用于描述其功能的，通过组建的<span class="type">Intent</span> Filter信息，android组件管理应用就可以掌握各个组件所具备的能力和可以处理的请求。而且，<span class="type">Intent</span> Filter对象的每个数据项的结构和含义，与<span class="type">Intent</span>中的数据项一一对应。
+</code></pre><p>二. Intent匹配</p>
+<p>1.Intent 匹配的算法流程</p>
+<pre><code><span class="number">1.1</span> <span class="keyword">Action</span> 的比较：
+每个<span class="type">Intent</span> Filter 对象都必须包含<span class="keyword">Action</span>信息，如果没有，则对任何一个<span class="type">Intent</span>对象，都会匹配失败。
+<span class="number">1.2</span> <span class="type">Data</span> 和 <span class="keyword">Type</span> 的比较
+<span class="number">1.3</span> Category 的比较
+</code></pre><p>三. Intent 的使用</p>
+<p>1.显式调用</p>
+<p>显式调用时必须制定组件名称，例如：</p>
+<pre><code><span class="type">Intent</span> <span class="type">intent</span> ＝ new <span class="type">Intent</span>();
+<span class="type">intent</span>.setClass(A.this,B.<span class="keyword">class</span>);        //指定了调用组件和实现组件
+A.this.startActivity(<span class="type">intent</span>);
+</code></pre><p>2.隐式调用</p>
+<p>（1）隐式调用并传递Extra附加数据与静态广播的使用</p>
+<pre><code>首先实现<span class="type">Intent</span>的调用代码
+
+<span class="type">Intent</span> intent_BroaadCast = <span class="keyword">new</span> <span class="type">Intent</span>(<span class="string">"Intent_1112"</span>);
+intent_BroaadCast.putExtra(<span class="string">"StringTest"</span>, <span class="string">"LA_LA_LA"</span>);
+<span class="type">MainActivity</span>.<span class="keyword">this</span>.sendBroadcast(intent_BroaadCast);
+
+实现静态<span class="type">BroadCastReceiver</span>
+
+<span class="keyword">package</span> me.androiddemo.canglangwenyue.androiddemo;
+
+<span class="keyword">import</span> android.content.<span class="type">BroadcastReceiver</span>;
+<span class="keyword">import</span> android.content.<span class="type">Context</span>;
+<span class="keyword">import</span> android.content.<span class="type">Intent</span>;
+<span class="keyword">import</span> android.widget.<span class="type">Toast</span>;
+
+<span class="comment">/**
+ * Created by canglangwenyue on 15-3-5.
+ */</span>
+public <span class="class"><span class="keyword">class</span> <span class="title">TestBroadCastReceiver</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">BroadcastReceiver</span> {</span>
+    <span class="annotation">@Override</span>
+    public void onReceive(<span class="type">Context</span> context, <span class="type">Intent</span> intent) {
+        <span class="type">Toast</span>.makeText(context,                         intent.getExtras().getString(<span class="string">"StringTest"</span>),<span class="type">Toast</span>.<span class="type">LENGTH_LONG</span>).show();
+    }
+}
+
+注册<span class="type">Receiver</span>
+
+&lt;receiver android:name=<span class="string">".TestBroadCastReceiver"</span>&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name=<span class="string">"Intent_1112"</span>&gt;&lt;/action&gt;
+    &lt;/intent-filter&gt;
+&lt;/receiver&gt;
+
+注意：再manifest中注册时action的name应与<span class="type">Intent</span> intent_BroaadCast = <span class="keyword">new</span>         <span class="type">Intent</span>(<span class="string">"Intent_1112"</span>);中的name保持一致。
+</code></pre><p> (2) 隐式调用并传递Extra附加数据与动态广播的使用</p>
+<pre><code> 首先，新建一个<span class="type">BroadCastReceiver</span>类
+
+ <span class="keyword">package</span> me.androiddemo.canglangwenyue.androiddemo;
+
+<span class="keyword">import</span> android.content.<span class="type">BroadcastReceiver</span>;
+<span class="keyword">import</span> android.content.<span class="type">Context</span>;
+<span class="keyword">import</span> android.content.<span class="type">Intent</span>;
+<span class="keyword">import</span> android.widget.<span class="type">Toast</span>;
+
+<span class="comment">/**
+ * Created by canglangwenyue on 15-3-5.
+ */</span>
+public <span class="class"><span class="keyword">class</span> <span class="title">MyBroadCast</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">BroadcastReceiver</span> {</span>
+    <span class="annotation">@Override</span>
+    public void onReceive(<span class="type">Context</span> context, <span class="type">Intent</span> intent) {
+
+                                                    <span class="type">Toast</span>.makeText(context,intent.getExtras().getString(<span class="string">"StringTest"</span>),
+                                                    <span class="type">Toast</span>.<span class="type">LENGTH_LONG</span>
+).show();
+
+    }
+}
+
+其次，再<span class="type">Activity</span>的onCreate中动态添加<span class="type">IntentFilter</span>，并注册<span class="type">BroadCastReceiver</span>；并在
+onStop中取消该<span class="type">BroadCastReceiver</span>。
+
+<span class="type">IntentFilter</span> filter = <span class="keyword">new</span> <span class="type">IntentFilter</span>();
+<span class="keyword">private</span> <span class="type">MyBroadCast</span> broadCast = <span class="keyword">new</span> <span class="type">MyBroadCast</span>();
+
+<span class="annotation">@Override</span>
+<span class="keyword">protected</span> void onCreate(<span class="type">Bundle</span> savedInstanceState) {
+    <span class="keyword">super</span>.onCreate(savedInstanceState);
+    setContentView(<span class="type">R</span>.layout.activity_main);
+
+    filter.addAction(<span class="string">"MyBroadCast"</span>);
+    registerReceiver(broadCast, filter);
+
+}
+
+ <span class="annotation">@Override</span>
+<span class="keyword">protected</span> void onStop() {
+    unregisterReceiver(broadCast);
+    <span class="keyword">super</span>.onStop();
+}
+
+使用该类型<span class="type">Intent</span>的代码：
+
+  <span class="type">Intent</span> intent_ActiveBroaadCast = <span class="keyword">new</span> <span class="type">Intent</span>();
+intent_ActiveBroaadCast.putExtra(<span class="string">"StringTest"</span>, <span class="string">"阿哈"</span>);
+intent_ActiveBroaadCast.setAction(<span class="string">"MyBroadCast"</span>);
+<span class="type">MainActivity</span>.<span class="keyword">this</span>.sendBroadcast(intent_ActiveBroaadCast);
+</code></pre><p> (3) 不使用广播的Intent</p>
+<pre><code> 除了广播来触发<span class="type">Intent</span>的<span class="keyword">Action</span>外，我们还可以使用startActivity()方法来实现相同功能。
+
+     <span class="keyword">public</span> void ButtonClick4(View view) {
+
+    /**
+     * 注意：
+     * 此处因为有动态声明的BroadCastReceiver，所以运行改方法后程序会奔溃，但是此处因为时范        例，便于对比，所以我并没有新建project
+     */
+
+    <span class="type">Intent</span> intent_ActiveBroaadCast = new <span class="type">Intent</span>(<span class="string">"myTest111"</span>);
+    intent_ActiveBroaadCast.putExtra(<span class="string">"StringTest"</span>, <span class="string">"德玛西亚"</span>);
+    MainActivity.this.startActivity(intent_ActiveBroaadCast);
+}      
+
+   然后我们必须在该<span class="type">intent</span>想要启动的实现组件中添加IntentFilter来截获，否则就无法匹配到实现组件。
+
+   &lt;activity
+        android:<span class="keyword">name</span>=<span class="string">".Activity2"</span>
+        android:label=<span class="string">"@string/title_activity_activity2"</span> &gt;
+        &lt;<span class="type">intent</span>-filter&gt;
+            &lt;<span class="keyword">action</span> android:<span class="keyword">name</span>=<span class="string">"myTest111"</span>&gt;&lt;/<span class="keyword">action</span>&gt;
+            &lt;category android:<span class="keyword">name</span>=<span class="string">"android.intent.category.DEFAULT"</span>&gt;&lt;/    category&gt;
+        &lt;/<span class="type">intent</span>-filter&gt;
+    &lt;/activity&gt; 
+需要注意的是：首先，<span class="keyword">action</span> <span class="keyword">name</span>应该保持一致；其次，必须声明
+&lt;categoryandroid:<span class="keyword">name</span>=<span class="string">"android.intent.category.DEFAULT"</span>&gt;&lt;/category&gt;，因为，我们在
+使用<span class="type">intent</span>时并没有指定category，所以，系统默认添加了<span class="keyword">DEFAULT</span>，故如果不在&lt;<span class="type">intent</span>-filter&gt;进
+行声明，则无法匹配到Activity。
+</code></pre><p> (4) 使用系统自带的一些标准Action，这里只列举一二：</p>
+<pre><code> 获取联系人列表
+
+    <span class="built_in">Uri</span> uri = <span class="built_in">Uri</span>.parse(<span class="string">"content://contacts"</span>);
+    Intent pickContactIntent = <span class="keyword">new</span> Intent(Intent.ACTION_PICK, uri);
+      pickContactIntent.setType(ContactsContract.CommonDataKinds.
+      Phone.CONTENT_TYPE); <span class="comment">//         Show user only contacts w/ phone numbers</span>
+    startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);  
+
+拨打电话
+
+    <span class="built_in">Uri</span> number = <span class="built_in">Uri</span>.parse(<span class="string">"tel:187008*****"</span>);
+    Intent callIntent = <span class="keyword">new</span> Intent(Intent.ACTION_CALL, number);
+
+    startActivity(callIntent);
+</code></pre><p>四. Intent 传输数据<br>    android 界面组件间通过要通过Intent来实现，Intent传递数据的方式有两种</p>
+
+      
+    </div>
+    <footer>
+      
+          
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <span class="jiathis_txt">分享到：</span>
+  <a class="jiathis_button_weixin">微信</a>
+  <a class="jiathis_button_tsina">新浪微博</a>
+  <a class="jiathis_button_renren">人人网</a>
+  <a class="jiathis_button_qzone">QQ空间</a>
+  <a class="jiathis_button_douban">豆瓣</a>
+  <a class="jiathis_button_pocket">Pocket</a>
+  <a href="http://www.jiathis.com/share?uid=901656" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=901656" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          <div class="clearfix"></div>
+          <nav id="pagination">
+  
+    <a href="/2015/05/01/hello-world/" class="alignleft prev"><i class="fa fa-long-arrow-left"></i>Next</a>
+  
+  
+    <a href="/2014/12/28/关于大学生创业之我见/" class="alignright next">Prev<i class="fa fa-long-arrow-right"></i></a>
+  
+  <div class="clearfix"></div>
+</nav>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-thread-key="/2015/03/04/android-intent-机制/"></div>
+<!-- Duoshuo Comment END -->
+  
+</section>
+
+
+
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div>
+  
+  &copy; 2015 Wenyue
+  
+</div>
+Powered by <a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a> and <a href="http://pages.github.com/" title="GitHub Pages" target="_blank" rel="external">GitHub Pages</a>
+
+<div class="clearfix"></div></footer>
+  
+<script src="/js/jquery.imagesloaded.min.js" type="text/javascript"></script>
+<script src="/js/gallery.js" type="text/javascript"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+
+
+    <script type="text/javascript">
+        (function(){
+
+            $(window).scroll(function(){
+
+                var scrollTop = $(window).scrollTop();
+                if ( scrollTop >200 ){
+                    $("#main-nav").removeClass('normal_mode').addClass('top_mode');
+                } else{
+                    $("#main-nav").removeClass('top_mode').addClass('normal_mode');
+                }
+
+            });
+
+        })();
+    </script>
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox({
+      'titlePosition': 'inside'
+    });
+  })(jQuery);
+  </script>
+
+
+
+    
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wenyue"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+
+
+<script type="text/javascript">
+  
+  $(function(){
+
+    $('.title').hover(
+      function() {      
+        $(this).stop().animate(
+          {'marginLeft': '10px'}, 200
+        );   
+      }, 
+      function() {       
+        $(this).stop().animate({'marginLeft': '0px'}, 200);      
+      
+    });   
+
+  });
+
+</script>
+
+
+</body>
+</html>

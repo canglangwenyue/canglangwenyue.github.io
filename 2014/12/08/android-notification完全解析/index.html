@@ -1,0 +1,692 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android notification完全解析 | Wenyue‘s Blog</title>
+  <meta name="author" content="Wenyue">
+  
+  <meta name="description" content="java web android">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="android notification完全解析"/>
+  <meta property="og:site_name" content="Wenyue‘s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Wenyue‘s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-368771XX-X']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+<body>
+  <header id="header" class='normal_mode'>
+    <nav id="main-nav">
+  <ul class='container'>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+  </header>
+  <div id="content" class="container">
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2014-12-08T12:40:48.000Z"><a href="/2014/12/08/android-notification完全解析/">周一, 12月 8 2014, 8:40:48 晚上</a></time>
+
+  
+    <h1 class="title">android notification完全解析</h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <p>Notifications in Android 4.4 and Lower</p>
+<p>notification是很重要的部分，它与service，BroadcastReceiver，Intent等密切相关，很好地使用notification可以使你的app的活跃度相对于没有notification 的app大增。</p>
+<p>很明显这篇文章将详细的介绍4.4及以下的notification。至于，android 5.0的相关特性，我计划在假期里开一个特辑来写。下载就当是回顾知识了。毕竟，温故而知新嘛，哈哈。</p>
+<pre><code>The notification <span class="keyword">system</span> allows your app <span class="built_in">to</span> keep <span class="operator">the</span> user informed about events,
+ such <span class="keyword">as</span> <span class="built_in">new</span> chat messages <span class="operator">or</span> <span class="operator">a</span> calendar event. Think <span class="operator">of</span> notifications <span class="keyword">as</span> <span class="operator">a</span> 
+ news channel that alerts <span class="operator">the</span> user <span class="built_in">to</span> important events <span class="keyword">as</span> they happen <span class="operator">or</span> <span class="operator">a</span> <span class="built_in">log</span> 
+ that chronicles events <span class="keyword">while</span> <span class="operator">the</span> user is <span class="operator">not</span> paying attention.
+</code></pre><p>notification使得你的app可以告知用户app中的事件，例如一条新的message或者一个日历事件。可以认为notification是一个新闻渠道，它用来在用户不注意到的时候来通知用户一些重要事件。</p>
+<p>Anatomy of a notification</p>
+<pre><code>Base Layout
+
+At <span class="operator">a</span> minimum, all notifications consist <span class="operator">of</span> <span class="operator">a</span> base layout, including:
+
+<span class="operator">the</span> sending application<span class="string">'s notification icon or the sender'</span>s photo
+<span class="operator">a</span> notification title <span class="operator">and</span> message
+<span class="operator">a</span> timestamp
+<span class="operator">a</span> secondary icon <span class="built_in">to</span> identify <span class="operator">the</span> sending application when <span class="operator">the</span> sender<span class="string">'s image is     shown for the main icon</span>
+</code></pre><p>notification的基本布局</p>
+<p>最低限度，所有的notifications 都由基本布局构成，包括：</p>
+<p>发送notification的application的icon或者发送者的image。<br>notification的title和message。<br>时间戳<br>当main icon用来显示sender’s image时 Secondary icon用来显示发送application的icon。</p>
+<pre><code>Expanded layouts
+
+You have the option to provide more event detail. You can <span class="operator"><span class="keyword">use</span> this <span class="keyword">to</span> <span class="keyword">show</span> the 
+<span class="keyword">first</span> few <span class="keyword">lines</span> <span class="keyword">of</span> a message <span class="keyword">or</span> <span class="keyword">show</span> a larger image preview. This provides the 
+<span class="keyword">user</span> <span class="keyword">with</span> additional context, <span class="keyword">and</span> - <span class="keyword">in</span> <span class="keyword">some</span> cases - may allow the <span class="keyword">user</span> <span class="keyword">to</span> <span class="keyword">read</span> 
+a message <span class="keyword">in</span> its entirety. The <span class="keyword">user</span> can pinch-zoom <span class="keyword">or</span> two-finger glide <span class="keyword">in</span> <span class="keyword">order</span> 
+<span class="keyword">to</span> toggle <span class="keyword">between</span> base <span class="keyword">and</span> expanded layouts. <span class="keyword">For</span> single <span class="keyword">event</span> notifications, 
+Android provides two expanded layout templates (<span class="built_in">text</span> <span class="keyword">and</span> image) <span class="keyword">for</span> you <span class="keyword">to</span> re-
+<span class="keyword">use</span> <span class="keyword">in</span> your application.</span>
+</code></pre><p>notification的扩展布局</p>
+<p>你可以选择提供事件的更多细节。你可以用它来显示一个message的一些行或者显示一个图片的预览。这些给用户提供了额外的内容，并且，在一些情况下，可以允许用户阅读完整的信息。用户可以通过 pinch-zoom 或者双手指滑动来打开扩展布局。android为单个notification提供了两种扩展布局的方式(image,text)以供你在你的application中使用。</p>
+<p><img src="http://cl.ly/image/44191C3N2g3L/notifications_pattern_anatomy.png" alt="Alt text"></p>
+<p><img src="http://cl.ly/image/182S1j201G3T/20140224232357359.jpeg" alt="Alt text"></p>
+<p><img src="http://cl.ly/image/0R2Q2L1j060v/notifications_pattern_expandable.png" alt="Alt text"></p>
+<p>1.notification的title<br>2.发送notification的application的icon或者发送者的image。<br>3.notification的message<br>4.notification的数目显示<br>5.当main icon用来显示sender’s image时 Secondary icon用来显示发送application的icon。<br>6.时间戳，默认为系统发出通知的时间。</p>
+<p>Actions</p>
+<pre><code>Android supports optional actions <span class="keyword">that</span> are displayed <span class="keyword">at</span> <span class="keyword">the</span> bottom <span class="keyword">of</span> <span class="keyword">the</span> 
+notification. With actions, users can handle <span class="keyword">the</span> most common tasks <span class="keyword">for</span> a 
+particular notification <span class="keyword">from</span> within <span class="keyword">the</span> notification shade <span class="keyword">without</span> having <span class="keyword">to</span> 
+open <span class="keyword">the</span> originating <span class="type">application</span>. This speeds up interaction <span class="keyword">and</span>, <span class="keyword">in</span> 
+conjunction <span class="keyword">with</span> <span class="string">"swipe-to-dismiss"</span>, helps users <span class="keyword">to</span> streamline their 
+notification triaging experience.
+
+Be judicious <span class="keyword">with</span> how many actions you include <span class="keyword">with</span> a notification. The more 
+actions you include, <span class="keyword">the</span> more cognitive complexity you create. Limit yourself 
+<span class="keyword">to</span> <span class="keyword">the</span> fewest <span class="type">number</span> <span class="keyword">of</span> actions possible <span class="keyword">by</span> only including <span class="keyword">the</span> most imminently 
+important <span class="keyword">and</span> meaningful ones.
+
+Good candidates <span class="keyword">for</span> actions <span class="function_start"><span class="keyword">on</span></span> notifications are actions <span class="keyword">that</span> are:
+
+essential, frequent <span class="keyword">and</span> typical <span class="keyword">for</span> <span class="keyword">the</span> content type you're displaying
+<span class="property">time</span>-critical
+<span class="keyword">not</span> overlapping <span class="keyword">with</span> neighboring actions
+Avoid actions <span class="keyword">that</span> are:
+
+ambiguous，duplicative <span class="keyword">of</span> <span class="keyword">the</span> default action <span class="keyword">of</span> <span class="keyword">the</span> notification (such <span class="keyword">as</span> <span class="string">"Read"</span> <span class="keyword">or</span> <span class="string">"Open"</span>)
+</code></pre><p>android支持在notification的地步显示可选的操作。有了这些actions，用户可以处理大多数相同的tasks而无需打开应用。这集快乐交互的速度，并且结合滑动消失使得用户简化其通知处理的经历。</p>
+<p>明智的决定在你的notification里面放置的action的数量。如果你包含了更多的action，那么你便增加了交互的复杂性。请选择一个或者两个很重要并且有意义的action。</p>
+<p>好的候选action有以下的特点：</p>
+<p>.对该通知时重要的，典型的，并且频繁使用的action。<br>.时间紧迫的<br>.不要和相邻的action产生重叠</p>
+<p>避免以下操作：</p>
+<p>.含糊不清地<br>.和点击notification的action重复的(such as “Read” or “Open”)</p>
+<p>Design guidelines</p>
+<p>.个性化<br>.导航到正确的地方<br>.正确的设置通知的优先级</p>
+<p>主要看一下优先级的设置吧，其他的解释大家可以参考官网。<br>用方法setPriority(int pri)来指定优先级</p>
+<p><img src="http://cl.ly/image/2Y2f122Y2r0E/notifications_pattern_priority.png" alt="Alt text"></p>
+<p>对应的属性如下：</p>
+<p>Notification.PRIORITY_DEFAULT(优先级为0)<br>Notification.PRIORITY_HIGH<br>Notification.PRIORITY_LOW<br>Notification.PRIORITY_MAX(优先级为2)<br>Notification.PRIORITY_MIN(优先级为-2)</p>
+<p>现在，我们来看一下，如何实现一个notification。估计大家现在最常用的做法是下面这种：</p>
+<pre><code>Notification notification = <span class="keyword">new</span> Notification(R.drawable.ic_launcher, 
+getText(R.<span class="built_in">string</span>.app_name),
+           System.currentTimeMillis());
+
+   Intent notificationIntent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, MyService.<span class="keyword">class</span>);
+   PendingIntent pendingIntent = PendingIntent.getActivity(<span class="keyword">this</span>, <span class="number">0</span>, 
+   notificationIntent, <span class="number">0</span>);
+   notification.setLatestEventInfo(<span class="keyword">this</span>, getText(R.<span class="built_in">string</span>.hello_world),
+           getText(R.<span class="built_in">string</span>.hello_world), pendingIntent);
+   startForeground(<span class="number">1</span>, notification);
+</code></pre><p>这是在service里面启动一个notification，但是大家一定记住这种方法已经过时了，也就是说Google官方已经不提倡使用这种方法来启动一个notification了。官方推荐使用V4包下NotificationCompat.Builder，这样，我们便可以设置各种属性。</p>
+<p>好了，现在我们具体来看一下，Notification的具体实现。</p>
+<p>1.创建一个简单的notification。</p>
+<p><img src="http://cl.ly/image/182S1j201G3T/20140224232357359.jpeg" alt="Alt text"></p>
+<pre><code>Required notification contents
+notification必须要包含的内容
+
+A Notification <span class="tag">object</span> must contain the following:
+一个notification必须包含下面的属性：
+
+A small <span class="attribute">icon</span>, set by <span class="function"><span class="title">setSmallIcon</span><span class="params">()</span></span>
+一个small <span class="attribute">icon</span>，用<span class="function"><span class="title">setSmallIcon</span><span class="params">()</span></span>来设置，对应于上图中的<span class="number">2</span>号区域
+
+A title, set by <span class="function"><span class="title">setContentTitle</span><span class="params">()</span></span>
+一个title，用<span class="function"><span class="title">setContentTitle</span><span class="params">()</span></span>来设置，对应于上图中的<span class="number">1</span>号区域
+
+Detail text, set by <span class="function"><span class="title">setContentText</span><span class="params">()</span></span>
+详细文本，用<span class="function"><span class="title">setContentText</span><span class="params">()</span></span>来设置，对应于上图中的<span class="number">3</span>号区域
+</code></pre><p>这三个是必须设置的，至于其他的扩展则是需求而定。代码如下：</p>
+<pre><code> <span class="keyword">private</span> NotificationManager manager;
+
+NotificationCompat.Builder notifyBuilder;
+
+<span class="annotation">@Override</span>
+<span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+    <span class="keyword">super</span>.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    <span class="comment">/*实例化NotificationManager以获取系统服务*/</span>
+    manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+}
+
+<span class="javadoc">/**
+ * 显示最简单的通知，以下method中的三个set方法是必须设置的
+ *
+ *<span class="javadoctag"> @param</span> view
+ */</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">simNotification</span><span class="params">(View view)</span> </span>{
+
+    Toast.makeText(<span class="keyword">this</span>, <span class="string">"hha"</span>, Toast.LENGTH_LONG).show();
+
+    notifyBuilder = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>)
+            <span class="comment">/*设置small icon*/</span>
+            .setSmallIcon(R.drawable.ic_launcher)
+            <span class="comment">/*设置title*/</span>
+            .setContentTitle(<span class="string">"通知"</span>)
+            <span class="comment">/*设置详细文本*/</span>
+            .setContentText(<span class="string">"Hello world"</span>);
+    manager.notify(<span class="number">100</span>, notifyBuilder.build());
+}
+</code></pre><p>代码里的注释已经很详细了，simNotification绑定到了一个Button。这样，我们已经实现了最简单的notification。</p>
+<p>2.创建一个点击跳转到其它Activity的Notification。</p>
+<pre><code> /<span class="keyword">*</span><span class="keyword">*</span>
+ <span class="keyword">*</span> 点击跳转到指定Activity
+ <span class="keyword">*</span>
+ <span class="keyword">*</span> <span class="comment">@param view</span>
+ <span class="keyword">*</span>/
+public void largePicture(View view) {
+     /<span class="keyword">*</span>实例化NotificationManager以获取系统服务<span class="keyword">*</span>/
+    manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+    //点击的意图ACTION是跳转到Intent
+    Intent resultIntent = new Intent(this, MainActivity.class);
+    resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+    notifyBuilder = new NotificationCompat.Builder(this)
+            /<span class="keyword">*</span>设置large icon<span class="keyword">*</span>/
+            .setLargeIcon(bitmap)
+             /<span class="keyword">*</span>设置small icon<span class="keyword">*</span>/
+            .setSmallIcon(R.drawable.ic_launcher)
+            /<span class="keyword">*</span>设置title<span class="keyword">*</span>/
+            .setContentTitle(<span class="string">"通知"</span>)
+            /<span class="keyword">*</span>设置详细文本<span class="keyword">*</span>/
+            .setContentText(<span class="string">"Hello world"</span>)
+             /<span class="keyword">*</span>设置发出通知的时间为发出通知时的系统时间<span class="keyword">*</span>/
+            .setWhen(System.currentTimeMillis())
+             /<span class="keyword">*</span>设置发出通知时在status bar进行提醒<span class="keyword">*</span>/
+            .setTicker(<span class="string">"来自问月的祝福"</span>)
+            /<span class="keyword">*</span>setOngoing(boolean)设为true,notification将无法通过左右滑动的方式清除
+            <span class="keyword">*</span> 可用于添加常驻通知，必须调用cancle方法来清除
+            <span class="keyword">*</span>/
+            .setOngoing(true)
+             /<span class="keyword">*</span>设置点击后通知消失<span class="keyword">*</span>/
+            .setAutoCancel(true)
+             /<span class="keyword">*</span>设置通知数量的显示类似于QQ那种，用于同志的合并<span class="keyword">*</span>/
+            .setNumber(2)
+             /<span class="keyword">*</span>点击跳转到MainActivity<span class="keyword">*</span>/
+            .setContentIntent(pendingIntent);
+
+    manager.notify(121, notifyBuilder.build());
+}
+</code></pre><p>代码里的注释都很详细，加上前面的介绍相信大家都能理解了。</p>
+<p>3.创建一个显示bitmap的notification，类似于屏幕截图的显示效果</p>
+<p><img src="http://cl.ly/image/1Q1s2Q012m1O/big_picture_notification.png" alt="Alt text"></p>
+<p> /**</p>
+<pre><code> <span class="keyword">*</span> 类似于系统截图的效果
+ <span class="keyword">*</span>
+ <span class="keyword">*</span> <span class="comment">@param view</span>
+ <span class="keyword">*</span>/
+public void comNotification(View view) {
+
+    /<span class="keyword">*</span>实例化NotificationManager以获取系统服务<span class="keyword">*</span>/
+    manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+    /<span class="keyword">*</span>获取bitmap<span class="keyword">*</span>/
+    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+    notifyBuilder = new NotificationCompat.Builder(this)
+             /<span class="keyword">*</span>设置small icon<span class="keyword">*</span>/
+            .setSmallIcon(R.drawable.ic_launcher)
+            /<span class="keyword">*</span>设置title<span class="keyword">*</span>/
+            .setContentTitle(<span class="string">"通知"</span>)
+            /<span class="keyword">*</span>设置详细文本<span class="keyword">*</span>/
+            .setContentText(<span class="string">"Hello world"</span>)
+            .setWhen(System.currentTimeMillis())
+            .setOngoing(true)
+            .setNumber(2);
+
+    NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+    bigPictureStyle.bigPicture(bitmap);
+    notifyBuilder.setStyle(bigPictureStyle);
+
+    manager.notify(121, notifyBuilder.build());
+}
+</code></pre><p>这里唯一需要注意的是加载图片最好不要在UI线程进行(这里只是为了演示)。</p>
+<p>4.创建一个类似于日历事件的notification，并与Service进行交互。</p>
+<p><img src="http://cl.ly/image/2c3p2b3C2o0x/add_notification.png" alt="Alt text"></p>
+<pre><code> <span class="comment">/**
+ * 创建一个类似于日历事件的notification
+ * @param view
+ */</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add_action</span><span class="params">(View view)</span> </span>{
+
+    myIntent = <span class="keyword">new</span> Intent(getApplicationContext(), MyIntentService.<span class="keyword">class</span>);
+
+    myIntent.putExtra(myConstants.EXTRA_MESSAGE, <span class="string">" 来自问月的祝福"</span>);
+    myIntent.setAction(myConstants.ACTION_PING);
+    myIntent.putExtra(myConstants.EXTRA_TIMER, <span class="number">1000</span>);
+    startService(myIntent);
+
+}
+</code></pre><p>IntentService代码如下，之后在需要时可以在此扩展IntentService，这里注意一下IntentService类的构造器的重载，super里面是你的路径名。</p>
+<pre><code><span class="keyword">package</span> me.androiddemo.canglangwenyue.test;
+
+<span class="keyword">import</span> android.app.IntentService;
+<span class="keyword">import</span> android.app.Notification;
+<span class="keyword">import</span> android.app.NotificationManager;
+<span class="keyword">import</span> android.app.PendingIntent;
+<span class="keyword">import</span> android.content.Intent;
+<span class="keyword">import</span> android.support.v4.app.NotificationCompat;
+<span class="keyword">import</span> android.util.Log;
+
+<span class="javadoc">/**
+ * Created by canglangwenyue on 14-12-9.
+ */</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyIntentService</span> <span class="keyword">extends</span> <span class="title">IntentService</span> </span>{
+
+<span class="keyword">private</span> NotificationManager manager;
+<span class="keyword">private</span> String message;
+<span class="keyword">private</span> <span class="keyword">int</span> mMills;
+NotificationCompat.Builder builder;
+
+<span class="function"><span class="keyword">public</span> <span class="title">MyIntentService</span><span class="params">()</span> </span>{
+    <span class="comment">// The super call is required. The background thread that IntentService</span>
+    <span class="comment">// starts is labeled with the string argument you pass.</span>
+    <span class="keyword">super</span>(<span class="string">"me.androiddemo.canglangwenyuet.test"</span>);
+}
+
+<span class="annotation">@Override</span>
+<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(Intent intent)</span> </span>{
+
+    message = intent.getStringExtra(myConstants.EXTRA_MESSAGE);
+
+    mMills = intent.getIntExtra(myConstants.EXTRA_TIMER, myConstants.DEFAULT_TIMER_DURATION);
+
+    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+    String action = intent.getAction();
+    issueNotification(intent,message);
+
+    <span class="keyword">if</span> (action.equals(myConstants.ACTION_PING)) {
+        issueNotification(intent,message);
+    }<span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(action.equals(myConstants.ACTION_SNOOZE)</span>) </span>{
+        notificationManager.cancel(myConstants.NOTIFICATION_ID);
+        issueNotification(intent,<span class="string">""</span>);
+    }<span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(action.equals(myConstants.ACTION_DISMISS)</span>) </span>{
+        notificationManager.cancel(myConstants.NOTIFICATION_ID);
+    }
+
+
+}
+
+<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">issueNotification</span><span class="params">(Intent intent, String msg)</span> </span>{
+    manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    Intent dissmissItent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>,MyIntentService.class);
+    dissmissItent.setAction(myConstants.ACTION_DISMISS);
+    PendingIntent disIntent = PendingIntent.getService(<span class="keyword">this</span>,<span class="number">0</span>,dissmissItent,<span class="number">0</span>);
+
+    Intent snoozeIntent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>,MyIntentService.class);
+    snoozeIntent.setAction(myConstants.ACTION_SNOOZE);
+    PendingIntent snoopIntent = PendingIntent.getService(<span class="keyword">this</span>,<span class="number">0</span>,snoozeIntent,<span class="number">0</span>);
+
+    builder = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>)
+            .setSmallIcon(R.drawable.ic_launcher)
+            .setContentTitle(<span class="string">"Information"</span>)
+            .setContentText(<span class="string">"lalallalala"</span>)
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setStyle(<span class="keyword">new</span> NotificationCompat.BigTextStyle().bigText(msg))
+            .addAction(R.drawable.ic_launcher, <span class="string">"Dismiss"</span>, disIntent)
+            .addAction(R.drawable.ic_launcher,<span class="string">"snooze"</span>,snoopIntent);
+
+
+    Intent resultIntent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>,MainActivity2.class);
+    resultIntent.putExtra(myConstants.EXTRA_MESSAGE,msg);
+    resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+
+    PendingIntent resultPendingIntent = PendingIntent.getActivity(<span class="keyword">this</span>,<span class="number">0</span>,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+    builder.setContentIntent(resultPendingIntent);
+    <span class="comment">//        manager.notify(myConstants.NOTIFICATION_ID,builder.build());</span>
+    startTimer(mMills);
+
+
+
+}
+
+<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startTimer</span><span class="params">(<span class="keyword">int</span> mMills)</span> </span>{
+    <span class="keyword">try</span> {
+
+        Thread.sleep(mMills);
+
+    }<span class="keyword">catch</span> (Exception e) {
+        Log.d(myConstants.DEBUG_TAG, <span class="string">"ERROR"</span>);
+    }
+    issueNotification(builder);
+}
+
+<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">issueNotification</span><span class="params">(NotificationCompat.Builder builder)</span> </span>{
+    manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+    manager.notify(myConstants.NOTIFICATION_ID,builder.build());
+}
+}
+</code></pre><p>这里只是实现了一个简单的Timer。参考一下就好。</p>
+<p>5.创建一个自定义的notification，只要通过RemoteViews来获取你的XML布局文件，并通过.setContent(remoteViews)就好，大家只需要对比不同之处。</p>
+<p><img src="http://cl.ly/image/1x2d1m2a0C2t/ustom_notification.png" alt="Alt text"></p>
+<pre><code> /**
+ * 自定义notification样式
+ *
+ * @param view
+ */
+<span class="component">public void Cus_Notification(View view) {
+
+    Toast<span class="string">.makeText(MainActivity.this</span>, "AHa", Toast<span class="string">.LENGTH_LONG).show()</span>;
+    /*实例化NotificationManager以获取系统服务*/
+    manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    RemoteViews remoteViews = new RemoteViews(getPackageName(), R<span class="string">.layout.customnotification)</span>;
+
+    remoteViews<span class="string">.setImageViewResource(R.id.imageView</span>, R<span class="string">.drawable.psb)</span>;
+    remoteViews<span class="string">.setTextViewText(R.id.textView</span>, "Your Haven");
+
+    remoteViews<span class="string">.setTextViewText(R.id.textView2</span>, "YUI");
+    remoteViews<span class="string">.setTextViewText(R.id.textView3</span>, "豆瓣－FNM －我的红心 MHZ");
+
+    remoteViews<span class="string">.setViewVisibility(R.id.my_large_button</span>, View<span class="string">.VISIBLE)</span>;
+    notifyBuilder = new NotificationCompat<span class="string">.Builder(this)</span>
+            <span class="string">.setContent(remoteViews)</span>
+            <span class="string">.setContentIntent(getDefalutIntent(Notification.FLAG_AUTO_CANCEL))</span>
+             /*设置small icon*/
+            <span class="string">.setSmallIcon(R.drawable.ic_launcher)</span>
+            /*设置title*/
+            <span class="string">.setContentTitle("通知")</span>
+            /*设置详细文本*/
+            <span class="string">.setTicker("Your</span> Haven")
+            <span class="string">.setContentText("Hello</span> world")
+            <span class="string">.setWhen(System.currentTimeMillis())</span>
+            <span class="string">.setPriority(Notification.PRIORITY_DEFAULT)//</span> 设置该通知优先级
+            <span class="string">.setOngoing(true)</span>;
+
+    Notification noty = notifyBuilder<span class="string">.build()</span>;
+    noty<span class="string">.contentView</span> = remoteViews;
+    manager<span class="string">.notify(313</span>, noty);
+
+}</span>
+</code></pre><p>这里只是添加了一个ImageView和三个TextView，大家可以进一步扩充，例如添加ImageButton，并通过BroadcastReceiver来监听。</p>
+<p>6.最后在写一个带进度条指示器的notification吧，到了这里大家应该理解什么叫求同存异了吧，哈哈。至于其它的notification，例如FullScreen下的notification或者LockScreen的notification等，都是换汤不换药，大家只要按需设置相应的属性就好，具体可以查询官方文档。</p>
+<p><img src="http://cl.ly/image/0B0D2h0o001j/process_notification.png" alt="Alt text"></p>
+<pre><code><span class="javadoc">/**
+ * 有进度条的notification
+ *<span class="javadoctag"> @param</span> view
+ */</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">Pro_Notification</span><span class="params">(View view)</span> </span>{
+
+    manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    notifyBuilder = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>);
+    notifyBuilder.setContentTitle(<span class="string">"Picture Download"</span>)
+            .setContentText(<span class="string">"Download in progress"</span>)
+            .setOngoing(<span class="keyword">true</span>)
+            .setSmallIcon(R.drawable.ic_launcher);
+<span class="comment">// Start a lengthy operation in a background thread</span>
+    <span class="keyword">new</span> Thread(
+            <span class="keyword">new</span> Runnable() {
+                <span class="annotation">@Override</span>
+                <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
+                    <span class="keyword">int</span> incr;
+                    <span class="comment">// Do the "lengthy" operation 20 times</span>
+                    <span class="keyword">for</span> (incr = <span class="number">0</span>; incr &lt;= <span class="number">100</span>; incr += <span class="number">5</span>) {
+                        <span class="comment">// Sets the progress indicator to a max value, the</span>
+                        <span class="comment">// current completion percentage, and "determinate"</span>
+                        <span class="comment">// state</span>
+                        notifyBuilder.setProgress(<span class="number">100</span>, incr, <span class="keyword">false</span>);
+                        <span class="comment">// Displays the progress bar for the first time.</span>
+                        manager.notify(<span class="number">0</span>, notifyBuilder.build());
+                        <span class="comment">// Sleeps the thread, simulating an operation</span>
+                        <span class="comment">// that takes time</span>
+                        <span class="keyword">try</span> {
+                            <span class="comment">// Sleep for 5 seconds</span>
+                            Thread.sleep(<span class="number">5</span> * <span class="number">1000</span>);
+                        } <span class="keyword">catch</span> (InterruptedException e) {
+                            Log.d(<span class="string">"NOTIFICATION"</span>, <span class="string">"sleep failure"</span>);
+                        }
+                    }
+                    <span class="comment">// When the loop is finished, updates the notification</span>
+                    notifyBuilder.setContentText(<span class="string">"Download complete"</span>)
+                            <span class="comment">// Removes the progress bar</span>
+                            .setProgress(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">false</span>);
+                    manager.notify(<span class="number">213</span>, notifyBuilder.build());
+                }
+            }
+<span class="comment">// Starts the thread by calling the run() method in its Runnable</span>
+    ).start();
+
+}
+</code></pre><p>大概解释一下，就是在一个异步线程里面每隔5秒使notification的process增加5，循环结束后，在重新添加一个notification来显示下载完成。至于进度还有其他方式设置，这里就不一一介绍了，实际使用时可以传入具体的下载进度。</p>
+<p>好了，感觉已经写了好多了，最后来总结一下notification的使用吧。<br>(一)通过以下几个步骤就可以获得一个notification的实现：</p>
+<p>1.获取NotificationManager实例，即获得状态通知栏管理权；</p>
+<pre><code>/<span class="keyword">*</span>实例化NotificationManager以获取系统服务<span class="keyword">*</span>/
+   manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+</code></pre><p>2.实例化notification的constructor</p>
+<pre><code>notifyBuilder = new NotificationCompat.<span class="function"><span class="title">Builder</span><span class="params">(this)</span></span>
+</code></pre><p>3.对notifyBuilder设置各种属性</p>
+<pre><code>/<span class="keyword">*</span><span class="keyword">*</span>
+            <span class="keyword">*</span> 前三个属性必须设置
+            <span class="keyword">*</span>/
+           /<span class="keyword">*</span>设置small icon<span class="keyword">*</span>/
+           .setSmallIcon(R.drawable.ic_launcher)
+           /<span class="keyword">*</span>设置title<span class="keyword">*</span>/
+           .setContentTitle(<span class="string">"通知"</span>)
+           /<span class="keyword">*</span>设置详细文本<span class="keyword">*</span>/
+           .setContentText(<span class="string">"Hello world"</span>)
+            /<span class="keyword">*</span>设置发出通知的时间为发出通知时的系统时间<span class="keyword">*</span>/
+           .setWhen(System.currentTimeMillis())
+            /<span class="keyword">*</span>设置发出通知时在status bar进行提醒<span class="keyword">*</span>/
+           .setTicker(<span class="string">"来自问月的祝福"</span>)
+            /<span class="keyword">*</span>设置点击后通知消失<span class="keyword">*</span>/
+           .setAutoCancel(true)
+                   /<span class="keyword">*</span><span class="keyword">*</span>
+                    <span class="keyword">*</span> 设置
+                    notification的默认效果有以下几种
+                    Notification.DEFAULT_ALL：铃声、闪光、震动均系统默认。
+                    Notification.DEFAULT_SOUND：系统默认铃声。
+                    Notification.DEFAULT_VIBRATE：系统默认震动。
+                    Notification.DEFAULT_LIGHTS：系统默认闪光。
+                    <span class="keyword">*</span>/
+           .setDefaults(Notification.DEFAULT_VIBRATE)
+            /<span class="keyword">*</span>setOngoing(boolean)设为true,notification将无法通过左右滑动的方式清除
+           <span class="keyword">*</span> 可用于添加常驻通知，必须调用cancle方法来清除
+           <span class="keyword">*</span>/
+           .setOngoing(true)
+            /<span class="keyword">*</span>设置通知数量的显示类似于QQ那种，用于同志的合并<span class="keyword">*</span>/
+           .setNumber(2);
+</code></pre><p> 4.显示notification</p>
+<pre><code>manager.notify(<span class="number">100</span>, notifyBuilder.build<span class="literal">()</span>);
+</code></pre><p> (二)一些常用的属性函数</p>
+<p> .setDefaults(int defaults)<br>     用于向通知添加声音、闪灯和振动效果的最简单、使用默认（defaults）属性，具体在上述代码中有写到。</p>
+<p> .setVibrate(long[] pattern)<br>     用于设置是否开启震动,true为开启</p>
+<p> .setSound(Uri sound)<br>     用于设置通知铃声</p>
+<p> .setPriority(int pri)<br>     用于设置优先级，同样之前有详细讲解</p>
+<p> .setOngoing(boolean ongoing)<br>     设置为true则为常驻通知栏的通知类似于墨迹天气那种的效果。</p>
+<p> setProgress(int max, int progress,boolean indeterminate)<br>     用于设置进度的notification中<br>嗯，今天就写这些吧，最后附上demo的下载地址。<a href="http://download.csdn.net/detail/u010835702/8241469" target="_blank" rel="external">点此下载</a></p>
+
+      
+    </div>
+    <footer>
+      
+          
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <span class="jiathis_txt">分享到：</span>
+  <a class="jiathis_button_weixin">微信</a>
+  <a class="jiathis_button_tsina">新浪微博</a>
+  <a class="jiathis_button_renren">人人网</a>
+  <a class="jiathis_button_qzone">QQ空间</a>
+  <a class="jiathis_button_douban">豆瓣</a>
+  <a class="jiathis_button_pocket">Pocket</a>
+  <a href="http://www.jiathis.com/share?uid=901656" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=901656" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          <div class="clearfix"></div>
+          <nav id="pagination">
+  
+    <a href="/2014/12/28/关于大学生创业之我见/" class="alignleft prev"><i class="fa fa-long-arrow-left"></i>Next</a>
+  
+  
+    <a href="/2014/12/07/android-service完全解析/" class="alignright next">Prev<i class="fa fa-long-arrow-right"></i></a>
+  
+  <div class="clearfix"></div>
+</nav>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-thread-key="/2014/12/08/android-notification完全解析/"></div>
+<!-- Duoshuo Comment END -->
+  
+</section>
+
+
+
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div>
+  
+  &copy; 2015 Wenyue
+  
+</div>
+Powered by <a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a> and <a href="http://pages.github.com/" title="GitHub Pages" target="_blank" rel="external">GitHub Pages</a>
+
+<div class="clearfix"></div></footer>
+  
+<script src="/js/jquery.imagesloaded.min.js" type="text/javascript"></script>
+<script src="/js/gallery.js" type="text/javascript"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+
+
+    <script type="text/javascript">
+        (function(){
+
+            $(window).scroll(function(){
+
+                var scrollTop = $(window).scrollTop();
+                if ( scrollTop >200 ){
+                    $("#main-nav").removeClass('normal_mode').addClass('top_mode');
+                } else{
+                    $("#main-nav").removeClass('top_mode').addClass('normal_mode');
+                }
+
+            });
+
+        })();
+    </script>
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox({
+      'titlePosition': 'inside'
+    });
+  })(jQuery);
+  </script>
+
+
+
+    
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wenyue"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+
+
+<script type="text/javascript">
+  
+  $(function(){
+
+    $('.title').hover(
+      function() {      
+        $(this).stop().animate(
+          {'marginLeft': '10px'}, 200
+        );   
+      }, 
+      function() {       
+        $(this).stop().animate({'marginLeft': '0px'}, 200);      
+      
+    });   
+
+  });
+
+</script>
+
+
+</body>
+</html>

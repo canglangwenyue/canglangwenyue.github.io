@@ -1,0 +1,381 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>java.lang.Cloneable解析 | Wenyue‘s Blog</title>
+  <meta name="author" content="Wenyue">
+  
+  <meta name="description" content="java web android">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="java.lang.Cloneable解析"/>
+  <meta property="og:site_name" content="Wenyue‘s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Wenyue‘s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-368771XX-X']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+<body>
+  <header id="header" class='normal_mode'>
+    <nav id="main-nav">
+  <ul class='container'>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+  </header>
+  <div id="content" class="container">
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2014-12-05T06:26:01.000Z"><a href="/2014/12/05/javalangcloneable解析/">周五, 12月 5 2014, 2:26:01 下午</a></time>
+
+  
+    <h1 class="title">java.lang.Cloneable解析</h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/java探究/">java探究</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <p>java.lang<br>Interface Cloneable</p>
+<p>All Known Subinterfaces:<br>所有已知的子接口</p>
+<pre><code>AclEntry, Attribute, AttributedCharacterIterator, Attributes, CertPathBuilderResult,CertPathParameters, CertPathValidatorResult, CertSelector,
+ CertStoreParameters, CharacterIterator, CRLSelector, Descriptor, GSSCredential,
+  <span class="keyword">Name</span>
+</code></pre><p>public interface Cloneable</p>
+<pre><code>A class implements the <span class="type">Cloneable</span> <span class="keyword">interface</span> to indicate to the <span class="type">Object</span>.clone() 
+<span class="keyword">method</span> that it <span class="keyword">is</span> legal <span class="keyword">for</span> that <span class="keyword">method</span> to make a field-<span class="keyword">for</span>-field copy <span class="keyword">of</span> 
+instances <span class="keyword">of</span> that class.
+
+<span class="type">Invoking</span> <span class="type">Object</span>'s clone <span class="keyword">method</span> on an instance that does <span class="keyword">not</span> implement the 
+<span class="type">Cloneable</span> <span class="keyword">interface</span> results <span class="keyword">in</span> the exception <span class="type">CloneNotSupportedException</span> being 
+thrown.
+
+<span class="type">By</span> convention, classes that implement this <span class="keyword">interface</span> should override <span class="type">Object</span>.clone
+ (which <span class="keyword">is</span> protected) <span class="keyword">with</span> a public <span class="keyword">method</span>. <span class="type">See</span> <span class="type">Object</span>.clone() <span class="keyword">for</span> details on
+  overriding this <span class="keyword">method</span>.
+
+<span class="type">Note</span> that this <span class="keyword">interface</span> does <span class="keyword">not</span> contain the clone <span class="keyword">method</span>. <span class="type">Therefore</span>, it <span class="keyword">is</span> <span class="keyword">not</span>
+ possible to clone an <span class="keyword">object</span> merely by virtue <span class="keyword">of</span> the fact that it implements this 
+ <span class="keyword">interface</span>. <span class="type">Even</span> <span class="keyword">if</span> the clone <span class="keyword">method</span> <span class="keyword">is</span> invoked reflectively, there <span class="keyword">is</span> no 
+ guarantee that it will succeed.
+</code></pre><p>此类实现了Cloneable interface以表明Object.clone() 方法可以以合法的方式对该class的实例进行复制。</p>
+<p>如果调用clone method方法的实例没有implements Cloneable接口，那么会抛出CloneNotSupportedException Exception。</p>
+<p>按照习惯，implements了Cloneable接口的classes需要重载Object.clone(它是protected)。</p>
+<p>注意，这个interface不包含clone method。因此，某个对象实现了它就clone是不可能的。即使反射调用clone method，也不会保证该调用会成功。</p>
+<p>Since:<br>JDK1.0<br>See Also:<br>CloneNotSupportedException, Object.clone()</p>
+<hr>
+<p>以上直接翻译自java doc，想必已经很清楚了吧。接下来，技改出一个简单的例子，来记录一下。</p>
+<pre><code><span class="comment">/**
+ * Created by canglangwenyue on 12/5/14.
+ */</span>
+<span class="keyword">public</span> class Person implements Cloneable {
+
+    <span class="keyword">private</span> <span class="built_in">int</span> id;
+    <span class="keyword">private</span> <span class="keyword">String</span> name;
+
+    <span class="keyword">public</span> <span class="keyword">String</span> getName() {
+    <span class="keyword">return</span> name;
+    }
+
+    <span class="keyword">public</span> <span class="built_in">int</span> getId() {
+    <span class="keyword">return</span> id;
+    }
+
+    <span class="keyword">public</span> <span class="keyword">void</span> setId(<span class="built_in">int</span> id) {
+    <span class="keyword">this</span>.id = id;
+    }
+
+        <span class="keyword">public</span> <span class="keyword">void</span> setName(<span class="keyword">String</span> name) {
+    <span class="keyword">this</span>.name = name;
+        }
+
+    @Override
+    <span class="keyword">protected</span> <span class="keyword">Object</span> clone() {
+
+    Person <span class="built_in">copy</span> = <span class="keyword">null</span>;
+
+    <span class="keyword">try</span> {
+        <span class="built_in">copy</span> = (Person) <span class="keyword">super</span>.clone();
+        <span class="built_in">copy</span>.clone().getClass().getName();
+
+    } <span class="keyword">catch</span> (CloneNotSupportedException e) {
+        e.printStackTrace();
+    } <span class="keyword">finally</span> {
+        <span class="keyword">return</span> <span class="built_in">copy</span>;
+    }
+
+
+        }
+
+        @Override
+    <span class="keyword">public</span> <span class="built_in">boolean</span> equals(<span class="keyword">Object</span> obj) {
+    <span class="keyword">return</span> <span class="keyword">super</span>.equals(obj);
+    }
+
+    <span class="comment">/**
+     * 引用复制的测试
+     */</span>
+
+        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> referenceTest() {
+    Person person = <span class="keyword">new</span> Person();
+
+    person.setId(<span class="number">1</span>);
+    person.setName(<span class="string">"WenYue"</span>);
+
+    Person <span class="built_in">copy</span> = person;
+
+    <span class="keyword">if</span> (<span class="built_in">copy</span>.equals(person))
+        System.out.<span class="built_in">println</span>(<span class="string">"引用复制的person和copy是同一个对象"</span>);
+    <span class="keyword">else</span>
+        System.out.<span class="built_in">println</span>(<span class="string">"引用复制的person和copy不是同一个对象"</span>);
+
+    System.out.<span class="built_in">println</span>(person);
+    System.out.<span class="built_in">println</span>(<span class="built_in">copy</span>);
+    System.out.<span class="built_in">println</span>(person.getName());
+    System.out.<span class="built_in">println</span>(<span class="built_in">copy</span>.getName());
+
+        }
+
+    <span class="comment">/**
+     * 对于Object的clone的测试方法，并检测出clone实现的是浅拷贝
+     */</span>
+        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> cloneTest(){
+    Person person = <span class="keyword">new</span> Person();
+
+    person.setId(<span class="number">1</span>);
+    person.setName(<span class="string">"WenYue"</span>);
+
+    Person <span class="built_in">copy</span> = <span class="keyword">null</span>;
+
+    <span class="built_in">copy</span> = (Person) person.clone();
+
+    <span class="keyword">if</span> (<span class="built_in">copy</span>.equals(person))
+        System.out.<span class="built_in">println</span>(<span class="string">"clone的person和copy是同一个对象"</span>);
+    <span class="keyword">else</span>
+        System.out.<span class="built_in">println</span>(<span class="string">"clone的person和copy不是同一个对象"</span>);
+
+    System.out.<span class="built_in">println</span>(person);
+    System.out.<span class="built_in">println</span>(<span class="built_in">copy</span>);
+    System.out.<span class="built_in">println</span>(person.getName());
+    System.out.<span class="built_in">println</span>(<span class="built_in">copy</span>.getName());
+
+    <span class="keyword">String</span> result = person.getName()==<span class="built_in">copy</span>.getName()?<span class="string">"clone是浅拷贝"</span>:<span class="string">"clone是深拷贝"</span>;
+    System.out.<span class="built_in">println</span>(result);
+        }
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) {
+    <span class="comment">/*测试clone*/</span>
+    cloneTest();
+
+    <span class="comment">/*测试引用复制*/</span>
+    referenceTest();
+
+    }
+
+
+    }
+</code></pre><p>给出main函数的执行结果：</p>
+<p><img src="http://cl.ly/1K3b3B1E0G1S/ObjectClone.tiff" alt="Alt text"></p>
+<p>好了，现在来解释一下这段测试代码。</p>
+<p>可以看到main函数中执行了两个测试方法，cloneTest()和referenceTest();第一个实现了Cloneable interface后的Object进行clone() method的测试；而之所以添加第二个method的原因是将对象的浅拷贝，即clone(java 中默认对象的拷贝是浅拷贝)。，与引用的复制进行对比，便于大家理解。</p>
+<pre><code><span class="number">1.</span>从这段代码的执行结果中可以清晰地看到，clone实现的<span class="keyword">copy</span>为<span class="keyword">copy</span>创建了新对象(在内存中的地址不同)，而<span class="keyword">reference</span>的复制，只是把原对象的地址复制给了新对象，所以直行后，person和<span class="keyword">copy</span>指向了相同的地址空间。
+</code></pre><p>关于clone默认是浅拷贝的解释</p>
+<pre><code><span class="number">2</span>. 首先，由于id是基本数据类型， 那么对它的拷贝没有什么疑议，直接将一个<span class="number">4</span>字节的整数值拷贝过来就行。但是name是<span class="type">String</span>类型的，而且name只是一个引用，指向真正的<span class="type">String</span>对象，之所以说clone默认是浅拷贝的原因就是，在clone时clone方法只是把<span class="type">String</span>对象的引用值拷贝给了新的copy对象的name字段；而并非在内存中重新创建一个<span class="type">String</span>对象，并让copy对象的name字段的引用指向它。证明如下：
+
+ <span class="type">String</span> <span class="literal">result</span> = person.getName()==copy.getName()?<span class="string">"clone是浅拷贝"</span>:<span class="string">"clone是深拷贝"</span>;
+首先请大家看着行代码，大概意思是若二者在内存中的地址相同，则返回<span class="string">"clone是浅拷贝"</span>，而内存中的地址空间是否相同便可以判断是否是同一个对象。
+
+<span class="number">3</span>.正如前面文档解释的implements了<span class="type">Cloneable</span>接口的classes需要重载<span class="type">Object</span>.clone。
+</code></pre><p>这里挖个坑吧，关于深拷贝的仔细研究，我就在之后来填。</p>
+
+      
+    </div>
+    <footer>
+      
+          
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <span class="jiathis_txt">分享到：</span>
+  <a class="jiathis_button_weixin">微信</a>
+  <a class="jiathis_button_tsina">新浪微博</a>
+  <a class="jiathis_button_renren">人人网</a>
+  <a class="jiathis_button_qzone">QQ空间</a>
+  <a class="jiathis_button_douban">豆瓣</a>
+  <a class="jiathis_button_pocket">Pocket</a>
+  <a href="http://www.jiathis.com/share?uid=901656" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=901656" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          <div class="clearfix"></div>
+          <nav id="pagination">
+  
+    <a href="/2014/12/07/android-service完全解析/" class="alignleft prev"><i class="fa fa-long-arrow-left"></i>Next</a>
+  
+  
+    <a href="/2014/12/05/androidosparcelable文档自译/" class="alignright next">Prev<i class="fa fa-long-arrow-right"></i></a>
+  
+  <div class="clearfix"></div>
+</nav>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-thread-key="/2014/12/05/javalangcloneable解析/"></div>
+<!-- Duoshuo Comment END -->
+  
+</section>
+
+
+
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div>
+  
+  &copy; 2015 Wenyue
+  
+</div>
+Powered by <a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a> and <a href="http://pages.github.com/" title="GitHub Pages" target="_blank" rel="external">GitHub Pages</a>
+
+<div class="clearfix"></div></footer>
+  
+<script src="/js/jquery.imagesloaded.min.js" type="text/javascript"></script>
+<script src="/js/gallery.js" type="text/javascript"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+
+
+    <script type="text/javascript">
+        (function(){
+
+            $(window).scroll(function(){
+
+                var scrollTop = $(window).scrollTop();
+                if ( scrollTop >200 ){
+                    $("#main-nav").removeClass('normal_mode').addClass('top_mode');
+                } else{
+                    $("#main-nav").removeClass('top_mode').addClass('normal_mode');
+                }
+
+            });
+
+        })();
+    </script>
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox({
+      'titlePosition': 'inside'
+    });
+  })(jQuery);
+  </script>
+
+
+
+    
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wenyue"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+
+
+<script type="text/javascript">
+  
+  $(function(){
+
+    $('.title').hover(
+      function() {      
+        $(this).stop().animate(
+          {'marginLeft': '10px'}, 200
+        );   
+      }, 
+      function() {       
+        $(this).stop().animate({'marginLeft': '0px'}, 200);      
+      
+    });   
+
+  });
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android --Activity | Wenyue‘s Blog</title>
+  <meta name="author" content="Wenyue">
+  
+  <meta name="description" content="java web android">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="android --Activity"/>
+  <meta property="og:site_name" content="Wenyue‘s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Wenyue‘s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-368771XX-X']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+<body>
+  <header id="header" class='normal_mode'>
+    <nav id="main-nav">
+  <ul class='container'>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+  </header>
+  <div id="content" class="container">
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2014-10-20T14:41:44.000Z"><a href="/2014/10/20/android---activity/">周一, 10月 20 2014, 10:41:44 晚上</a></time>
+
+  
+    <h1 class="title">android --Activity</h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <p>一. 再探Activity生命周期<br>为了研究activity的生命周期，简单测试代码如下。</p>
+<pre><code>package com.example.testactivity;
+
+<span class="keyword">import</span> android.app.<span class="type">Activity</span>;
+<span class="keyword">import</span> android.os.<span class="type">Bundle</span>;
+<span class="keyword">import</span> android.util.<span class="type">Log</span>;
+<span class="keyword">import</span> android.view.<span class="type">Menu</span>;
+
+public class <span class="type">MainActivity</span> extends <span class="type">Activity</span> {
+
+private <span class="keyword">static</span> final <span class="type">String</span> <span class="type">LOG_TAG</span> = <span class="string">"MainActivity"</span>;
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onCreate(<span class="type">Bundle</span> savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onDestroy() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onDestroy();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onDestroy"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onRestart() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onRestart();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onRestart"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onResume() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onResume();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onResume"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onStart() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onStart();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onStart"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onStop() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onStop();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onStop"</span>);
+}
+
+@<span class="type">Override</span>
+protected <span class="type">void</span> onPause() {
+    // <span class="type">TODO</span> <span class="type">Auto</span>-generated <span class="keyword">method</span> stub
+    super.onPause();
+    <span class="type">Log</span>.i(<span class="type">LOG_TAG</span>, <span class="string">"MainActivity------onPause"</span>);
+}
+
+@<span class="type">Override</span>
+public boolean onCreateOptionsMenu(<span class="type">Menu</span> menu) {
+    // <span class="type">Inflate</span> the menu; this adds items to the action bar <span class="keyword">if</span> it <span class="keyword">is</span> present.
+    getMenuInflater().inflate(R.menu.main, menu);
+    <span class="keyword">return</span> <span class="literal">true</span>;
+}
+
+}
+</code></pre><p>查看logcat，输出如下：<br>1.点击进入 app 后，点击back button退出：</p>
+<p><img src="http://cl.ly/image/3s2y0l003o2r/D2C19BDB-64FB-47EB-8387-8159DB9F94CF.png" alt="Alt text"></p>
+<p>2.点击进入app后，直接锁屏：<br><img src="http://cl.ly/image/0n2y1u3i470W/w.png" alt="Alt text"></p>
+<p>解锁屏幕后，activity被唤醒：<br><img src="http://cl.ly/image/0R3d082B201m/we.png" alt="Alt text"></p>
+<p>3.点击app进入 app后，点 home键退出，又进入：<br><img src="http://cl.ly/image/0v0K2a2z023L/we2.png" alt="Alt text"></p>
+<p>4.点击 home键进入后直接锁屏<br><img src="http://cl.ly/image/1d093G3z143f/E570255E-553C-431A-AC56-35E18195EA17.png" alt="Alt text"></p>
+<p>然后唤醒<br><img src="http://cl.ly/image/1U1I0Y0u263s/vgv.png" alt="Alt text"></p>
+<p>5.点击app进入后，点home键退出，然后锁屏：<br><img src="http://cl.ly/image/0z372T1y2f33/hfjkshfl.png" alt="Alt text"></p>
+<p>然后唤醒进入<br><img src="http://cl.ly/image/2O1o2x39353H/hhhhh.png" alt="Alt text"></p>
+<p><img src="http://cl.ly/image/180830443r1l/vvvvvv.png" alt="Alt text"></p>
+<p>说明：<br>1）onpause()方法在用户离开activity时被调用（这一般并不表示activity要被销毁了)。这个函数一般用来提交哪些需要保存状态的数据。</p>
+<p>2）对<activity..>标签的说明<br>除label，name，icon外还需指定一个或多个<intent-filter..>来确定该activity可以响应的intent。</intent-filter..></activity..></p>
+<p><intent-filter..>是过滤器，action说明次activity时application的main入口，<category>指定这个activity需要在系统的application 列表中列出！</category></intent-filter..></p>
+<p>注：android application要求所有应用程序组件(Activity,Service,ContentProvider,BroadcastReceiver)都必须显示进行配置.</p>
+<p>二.Activity之间的值传递</p>
+<p>1）bundle(适用于数据比较少的情况)<br>    Intent intent ＝ new Intent();<br>    intent.setClass(A.class,B.class);<br>    intent.putExtra(“name”,”value”);<br>    startActivity(intent);<br>之后再B.class中用<br>    Intent intent = new Intent();<br>    intent.getExtras()来获取</p>
+<p>2）Bundle(数据较多时使用)<br>    Intent intent ＝ new Intent(A.class,B.class));<br>    Bundle bundle ＝ new Bundle();<br>    bundle.putString(“Stringkey1”,”value1”);<br>    bundle.putString(“booleankey2”,”value2”);<br>    intent.putExtra(“key”,bundle);<br>    startActivity(intent);<br>之后再B.class中用<br>    Intent intent = new Intent();<br>    Bundle bundle = intent.getBundleExtra(“key”);<br>    bundle.getBoolean(“booleankey2”);<br>    bundle.getString(“Stringkey1”);来获取。<br>3）解析startActivityForResult<br>    适用于A跳转到B，再返回到A，同时还要保留之前的用户输入。由于由页面 A跳转到页面 B之后，A所在页面的Activity已经被Destroy。所以，如果要重新返回A并显示数据，就必须将A所在页面的Activity再次唤醒，与此同时调用某个方法来获取并显示相应的数据。<br>    所以一般用以下几个步骤来实现<br>    a.从A跳转到B时使用startActivityForResult(Intent intent, int requestcode)方法；<br>    b.再A页面的Activity重写onActivityResult方法，<br>    onActivityResult(int requestcode, int resultcode, intent data);<br>    其中参数1是提供给onActivityResult，用来确认数据是从哪个activity返回的，并且该参数和从A跳转到B时使用startActivityForResult方法的requestcode相对应。<br>    参数2由新的activity在关闭前向前面的activity返回数据时使用。<br>    参数3是一个 intent，带有从B所在Activity返回的数据。</p>
+<pre><code>A 所在页面activity实现
+onActivityResult(<span class="type">int</span> requestcode, <span class="type">int</span> resultcode, intent data)｛
+    <span class="type">String</span> <span class="literal">result</span> = data.getExtras().getString(<span class="string">"result"</span>);
+｝
+
+B所在activity实现：
+ <span class="type">Intent</span> intent ＝ new <span class="type">Intent</span>();
+
+ intent.putExtra(<span class="string">"result"</span>,<span class="string">"value"</span>);
+ B.this.<span class="type">SetResult</span>(<span class="type">RESULT_OK</span>,intent);
+ B.this.finish();
+
+
+未完待续。。。
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+好，今天接着来进一步解析<span class="type">Activity</span>的生命周期。
+</code></pre><p> 自己画了一下activity的生命周期图，感觉很糟糕的样子。。<br> <img src="http://cl.ly/image/0x2V1M0q3f2s/84BF74FC-E267-4C34-855A-7AF0E1E3A449.png" alt="Alt text"><br> 如图所示，activity的整个生命周期有四种状态，而对这四种状态的描述通常使用一下7种方法来完成。<br> Activity的四种状态分别是：</p>
+<pre><code><span class="tag">a</span><span class="class">.running</span>
+当activity运行于屏幕前台(处于activity栈的栈顶)，此时它获取了    焦点可以相应用户操作，属于running状态，同一时刻只能有一个    activity处于<span class="function"><span class="title">running</span><span class="params">(active)</span></span>状态。
+
+<span class="tag">b</span><span class="class">.paused</span>
+此时Activity已经失去焦点，但是仍然对用户可见，例如：在该activity之上有另外一个透明的    Activity或Toast，AlertDialog等弹出窗口时，该Activity则处于暂停状态。暂停的Activity仍然    是处于存活状态，（它保留着所有的状态和成员信息并保持着和窗口管理器的连接），但当此时出现system     memory不够用时，就会被系统杀掉。
+
+c<span class="class">.Stopped</span>     
+指定Activity完全被另一个Activity遮挡时，它将处于停机状态，但它仍保留着所有的状态和成员信    息。只是此时指定的Activity对用户不可见，但当此时出现system     memory不够用时，就会被系统杀掉。
+
+d<span class="class">.Dead</span>
+Activity尚未启动，或者已经被手动中止，或者已经被system回收。导致Activity处于非活动状态。
+手动中止可以在程序中调用finish方法；而被system回收，则是可能是因为内存不足。当system内存不足时，Dalvak虚拟机的内存回收规则如下：
+    first：先回收与其它Activity，Service，Intent，Receiver无关的进程（优先回收独立的        Activity）。所以，一些耗时的操作最好写成Service。
+    second：不可见（stopped）的Activity。
+    Third：Service进程（经过前两步后，内存不足时采取）。
+    Fourth：    当前正在运行的（Running）Activity。
+</code></pre><p>伴随Activity生命周期的7个方法：</p>
+<pre><code> 当Activity从一种状态进入另一种状态时system会自动调用下面相应的方法来通知用户这种变化。
+
+a.Activity第一次被实例化的时候system会调用<span class="keyword">on</span>Create()方法（整个生命周期只调用一次）来进行初始化设置：
+    为Activity提供所需布局文件；为按钮绑定监听器等静态的设置操作。
+
+b.Activity可见，但尚未获得焦点，即不能与用户进行交互时调用：<span class="keyword">on</span>Start()，
+c.Activity已经stopped之后重新被system启动时调用<span class="keyword">on</span>Restart();
+d.当Activity获得用户焦点能进行交互时system调用<span class="keyword">on</span>Resume().
+
+e.当system启动另外一个Activity时，在新的Activity启动之前被system调用来保存当前获得用户焦点的Activity中的持久数据，停止动画等。当系统而非用户自己出于回收内存而关闭了Activity。此时，用户会期望当他再次回到这个Activity时，它仍保持着上次离开时的样子，此时便调用<span class="keyword">on</span>SaveInstanceState()，该方法用来保存Activity被杀之前的状态，它在<span class="keyword">on</span>Pause之前被触发，当system为了节省内存开销销毁了该Activity（或许用户并不想销毁）时就需要重写这个方法了，当该Activity再次被实例化时会通过<span class="keyword">on</span>Create(Bundle saveInstanceState)将已经保存的临时状态数据传入。需要注意的是
+<span class="keyword">on</span>SaveInstanceState() 方法并不会经常被调用，它的默认触发条件为按下home键，按下电源键，横竖屏切换三种情况。所以我们可以通过重写<span class="keyword">on</span>SaveInstanceState() 来记录Activity的临时数据。
+而记录持久数据时，应该使用<span class="keyword">on</span>Pause()来存储。
+
+f.当Activity完全被另一个Activity覆盖不可见时system调用<span class="keyword">on</span>Stop()；
+
+g.当Activity被kill时system调用<span class="keyword">on</span>Destroy(),用来释放<span class="keyword">on</span>Create()方法中创建的资源，如结束线程等。需要注意的是和<span class="keyword">on</span>Create相对应，<span class="keyword">on</span>Destroy()方法，在Activity的整个生命周期中也只被调用一次。
+</code></pre><p>至此，关于Activity的梳理已经差不多了，最后需要注意一下的是设置Activity的android：configChanges＝“”的设置。</p>
+
+      
+    </div>
+    <footer>
+      
+          
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <span class="jiathis_txt">分享到：</span>
+  <a class="jiathis_button_weixin">微信</a>
+  <a class="jiathis_button_tsina">新浪微博</a>
+  <a class="jiathis_button_renren">人人网</a>
+  <a class="jiathis_button_qzone">QQ空间</a>
+  <a class="jiathis_button_douban">豆瓣</a>
+  <a class="jiathis_button_pocket">Pocket</a>
+  <a href="http://www.jiathis.com/share?uid=901656" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=901656" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          <div class="clearfix"></div>
+          <nav id="pagination">
+  
+    <a href="/2014/10/22/android-sqlite-database/" class="alignleft prev"><i class="fa fa-long-arrow-left"></i>Next</a>
+  
+  
+  <div class="clearfix"></div>
+</nav>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-thread-key="/2014/10/20/android---activity/"></div>
+<!-- Duoshuo Comment END -->
+  
+</section>
+
+
+
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div>
+  
+  &copy; 2015 Wenyue
+  
+</div>
+Powered by <a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a> and <a href="http://pages.github.com/" title="GitHub Pages" target="_blank" rel="external">GitHub Pages</a>
+
+<div class="clearfix"></div></footer>
+  
+<script src="/js/jquery.imagesloaded.min.js" type="text/javascript"></script>
+<script src="/js/gallery.js" type="text/javascript"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+
+
+    <script type="text/javascript">
+        (function(){
+
+            $(window).scroll(function(){
+
+                var scrollTop = $(window).scrollTop();
+                if ( scrollTop >200 ){
+                    $("#main-nav").removeClass('normal_mode').addClass('top_mode');
+                } else{
+                    $("#main-nav").removeClass('top_mode').addClass('normal_mode');
+                }
+
+            });
+
+        })();
+    </script>
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox({
+      'titlePosition': 'inside'
+    });
+  })(jQuery);
+  </script>
+
+
+
+    
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wenyue"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+
+
+<script type="text/javascript">
+  
+  $(function(){
+
+    $('.title').hover(
+      function() {      
+        $(this).stop().animate(
+          {'marginLeft': '10px'}, 200
+        );   
+      }, 
+      function() {       
+        $(this).stop().animate({'marginLeft': '0px'}, 200);      
+      
+    });   
+
+  });
+
+</script>
+
+
+</body>
+</html>

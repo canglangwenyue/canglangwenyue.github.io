@@ -1,0 +1,485 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android.os.Parcelable文档自译 | Wenyue‘s Blog</title>
+  <meta name="author" content="Wenyue">
+  
+  <meta name="description" content="java web android">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="android.os.Parcelable文档自译"/>
+  <meta property="og:site_name" content="Wenyue‘s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Wenyue‘s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-368771XX-X']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+<body>
+  <header id="header" class='normal_mode'>
+    <nav id="main-nav">
+  <ul class='container'>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+  </header>
+  <div id="content" class="container">
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+      <time datetime="2014-12-05T01:16:06.000Z"><a href="/2014/12/05/androidosparcelable文档自译/">周五, 12月 5 2014, 9:16:06 上午</a></time>
+
+  
+    <h1 class="title">android.os.Parcelable文档自译</h1>
+  
+
+
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
+
+<div class="clear"></div>
+      
+    </header>
+    <div class="entry">
+      
+        <p>android.os.Parcelable接口的已知间接子类很多，这里就不列举了：</p>
+<pre><code><span class="keyword">Class</span> Overview
+
+<span class="keyword">Interface</span> <span class="keyword">for</span> classes whose instances can be written <span class="keyword">to</span> <span class="keyword">and</span> restored <span class="keyword">from</span> a 
+Parcel. Classes implementing the Parcelable <span class="keyword">interface</span> must also have a <span class="keyword">static</span> 
+field called CREATOR, which <span class="keyword">is</span> an <span class="built_in">object</span> implementing the Parcelable.Creator 
+<span class="keyword">interface</span>.
+</code></pre><p>该Interface用于实例可以被写入，并且可以从Parcel中恢复的classes(对于Parcel暂时只要知道它是一个存<br>放数据的容器就好了，我会在android IPC中写到它)。实现android.os.Parcelable接口的类必须持有一个实<br>现了android.os.Parcelable接口的名为 CREATOR 的静态字段。</p>
+<p>android.os.Parcelable接口典型使用方式,这是官网的例子：</p>
+<pre><code>package me.androiddemo.canglangwenyue.androiddemo;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+<span class="comment">/**
+ * Created by canglangwenyue on 12/5/14.
+ */</span>
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyParcelable</span> <span class="title">implements</span> <span class="title">Parcelable</span> {
+<span class="keyword">private</span> <span class="keyword">int</span> mData;
+
+<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">describeContents</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeToParcel</span><span class="params">(Parcel <span class="keyword">out</span>, <span class="keyword">int</span> flags)</span> </span>{
+    <span class="keyword">out</span>.writeInt(mData);
+}
+
+<span class="keyword">public</span> <span class="keyword">static</span> final Parcelable.Creator&lt;MyParcelable&gt; CREATOR
+        = <span class="keyword">new</span> Parcelable.Creator&lt;MyParcelable&gt;() {
+    <span class="function"><span class="keyword">public</span> MyParcelable <span class="title">createFromParcel</span><span class="params">(Parcel <span class="keyword">in</span>)</span> </span>{
+        <span class="keyword">return</span> <span class="keyword">new</span> MyParcelable(<span class="keyword">in</span>);
+    }
+
+    <span class="keyword">public</span> MyParcelable[] newArray(<span class="keyword">int</span> size) {
+        <span class="keyword">return</span> <span class="keyword">new</span> MyParcelable[size];
+    }
+};
+
+<span class="function"><span class="keyword">private</span> <span class="title">MyParcelable</span><span class="params">(Parcel <span class="keyword">in</span>)</span> </span>{
+    mData = <span class="keyword">in</span>.readInt();
+}
+}
+</code></pre><p>Summary(简介)</p>
+<p>Nested Classes(嵌套类)    </p>
+<pre><code><span class="number">1.</span><span class="keyword">interface</span>    Parcelable.ClassLoaderCreator&lt;T&gt;
+    Specialization <span class="keyword">of</span> Parcelable.Creator that allows you <span class="keyword">to</span> receive
+    the ClassLoader the <span class="built_in">object</span> <span class="keyword">is</span> being created <span class="keyword">in</span>.
+
+解析：专业化的 Parcelable.Creator，允许你接收的<span class="built_in">Object</span>内部创建的 ClassLoader 对象. 
+
+<span class="number">2.</span><span class="keyword">interface</span>    Parcelable.Creator&lt;T&gt;     
+<span class="keyword">Interface</span> that must be implemented <span class="keyword">and</span> provided <span class="keyword">as</span> a <span class="keyword">public</span> CREATOR field that
+ generates instances <span class="keyword">of</span> your Parcelable <span class="keyword">class</span> <span class="keyword">from</span> a Parcel. 
+ 解析：该接口必须被子类实现，而且CREATOR 作为公有字段来提供，CREATOR 用于从 Parcel中实例化你的可包装类.
+</code></pre><p>Constants(常量)</p>
+<pre><code>1.int    CONTENTS_FILE_DESCRIPTOR     
+Bit masks for <span class="operator"><span class="keyword">use</span> <span class="keyword">with</span> describeContents(): <span class="keyword">each</span> <span class="built_in">bit</span> represents a kind <span class="keyword">of</span> object
+ considered <span class="keyword">to</span> have potential special significance <span class="keyword">when</span> marshalled.
+
+解析：用于 describeContents() 的位掩码，每一位代表它编组时附加的特殊含义。
+
+<span class="number">2.</span><span class="built_in">int</span>    PARCELABLE_WRITE_RETURN_VALUE     
+Flag <span class="keyword">for</span> <span class="keyword">use</span> <span class="keyword">with</span> writeToParcel(Parcel, <span class="built_in">int</span>): the object being written <span class="keyword">is</span> a 
+<span class="keyword">return</span> <span class="keyword">value</span>, that <span class="keyword">is</span> the result <span class="keyword">of</span> a <span class="keyword">function</span> such <span class="keyword">as</span> <span class="string">"Parcelable 
+someFunction()"</span>, <span class="string">"void someFunction(out Parcelable)"</span>, <span class="keyword">or</span> <span class="string">"void 
+someFunction(inout Parcelable)"</span>.
+
+解析：writeToParcel(Parcel, <span class="built_in">int</span>)的标志位：作为一个返回值，是<span class="string">"Parcelable 
+someFunction()"</span>, <span class="string">"void someFunction(out Parcelable)"</span>, <span class="keyword">or</span> <span class="string">"void 
+someFunction(inout Parcelable)"</span>返回的result。</span>
+</code></pre><p>Public Methods(公共method)</p>
+<pre><code><span class="number">1.</span><span class="function"><span class="keyword">abstract</span> <span class="keyword">int</span>     <span class="title">describeContents</span><span class="params">()</span>
+Describe the kinds of special objects contained <span class="keyword">in</span> <span class="keyword">this</span> Parcelable's marshalled
+ representation.
+
+ 解析：描述各种特殊对象，它们包含在可包装对象的编组形式中.
+
+2.<span class="keyword">abstract</span> <span class="keyword">void</span>     <span class="title">writeToParcel</span><span class="params">(Parcel dest, <span class="keyword">int</span> flags)</span>
+Flatten <span class="keyword">this</span> <span class="keyword">object</span> <span class="keyword">in</span> to a Parcel.
+
+解析：将该对象展开到<span class="title">Parcel</span><span class="params">(存放数据的容器)</span>中。</span>
+</code></pre><p>Parcelable适用于通过Intent来传递自定义对象。最后给出一个用Parcelable进行数据传送的例子</p>
+<p>1.发送Object的Activity，内容很简单，点击Button，Intent携带Object跳转到MainActivity2(用来接收Object的Activity)。</p>
+<pre><code><span class="keyword">package</span> me.androiddemo.canglangwenyue.androiddemo;
+
+<span class="keyword">import</span> android.content.Intent;
+<span class="keyword">import</span> android.support.v7.app.ActionBarActivity;
+<span class="keyword">import</span> android.os.Bundle;
+<span class="keyword">import</span> android.view.Menu;
+<span class="keyword">import</span> android.view.MenuItem;
+<span class="keyword">import</span> android.view.View;
+<span class="keyword">import</span> android.widget.Button;
+
+<span class="keyword">import</span> java.util.HashMap;
+
+<span class="javadoc">/**
+ *<span class="javadoctag"> @author</span> canglangwenyue
+ * 用来发送信息的Activity
+ */</span>
+
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">ActionBarActivity</span> </span>{
+
+<span class="keyword">private</span> Button sendButton;
+
+<span class="annotation">@Override</span>
+<span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+    <span class="keyword">super</span>.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    sendButton = (Button) findViewById(R.id.send_button);
+
+    sendButton.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>{
+            Intent intent = <span class="keyword">new</span> Intent();
+            Person person = <span class="keyword">new</span> Person();
+
+            person.name = <span class="string">"WenYue"</span>;
+            intent.putExtra(<span class="string">"WenYue"</span>,person);
+            intent.setClass(MainActivity.<span class="keyword">this</span>,MainActivity2.class);
+
+            startActivity(intent);
+        }
+    });
+
+}
+
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>{
+    <span class="comment">// Inflate the menu; this adds items to the action bar if it is present.</span>
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>{
+    <span class="comment">// Handle action bar item clicks here. The action bar will</span>
+    <span class="comment">// automatically handle clicks on the Home/Up button, so long</span>
+    <span class="comment">// as you specify a parent activity in AndroidManifest.xml.</span>
+    <span class="keyword">int</span> id = item.getItemId();
+
+    <span class="comment">//noinspection SimplifiableIfStatement</span>
+    <span class="keyword">if</span> (id == R.id.action_settings) {
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">onOptionsItemSelected</span><span class="params">(item)</span></span>;
+}
+}
+</code></pre><p>2.MainActivity2用来接收来自MainActivity的Object，并打印Person.name的长度和content。</p>
+<pre><code>package me.androiddemo.canglangwenyue.androiddemo;
+
+<span class="keyword">import</span> android.content.Intent;
+<span class="keyword">import</span> android.support.v7.app.ActionBarActivity;
+<span class="keyword">import</span> android.os.Bundle;
+<span class="keyword">import</span> android.util.Log;
+<span class="keyword">import</span> android.view.Menu;
+<span class="keyword">import</span> android.view.MenuItem;
+
+<span class="comment">/**</span>
+</code></pre><ul>
+<li>@author canglangwenyue</li>
+<li><p>接收数据的Intent<br>  */</p>
+<p> public class MainActivity2 extends ActionBarActivity {</p>
+<p> @Override<br> protected void onCreate(Bundle savedInstanceState) {</p>
+<pre><code>super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main_activity2);
+
+Intent intent = getIntent();
+
+Person person = intent.getParcelableExtra(<span class="string">"WenYue"</span>);
+
+<span class="keyword">Log</span>.<span class="literal">e</span>(<span class="string">"MainActivity2 received message's length-----&gt;"</span>,String.valueOf(person.name.<span class="literal">length</span>()));
+<span class="keyword">Log</span>.<span class="literal">e</span>(<span class="string">"MainActivity2 received message content------&gt;"</span>,person.name);
+</code></pre><p> }</p>
+</li>
+</ul>
+<pre><code><span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>{
+    <span class="comment">// Inflate the menu; this adds items to the action bar if it is present.</span>
+    getMenuInflater().inflate(R.menu.menu_main_activity2, menu);
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>{
+    <span class="comment">// Handle action bar item clicks here. The action bar will</span>
+    <span class="comment">// automatically handle clicks on the Home/Up button, so long</span>
+    <span class="comment">// as you specify a parent activity in AndroidManifest.xml.</span>
+    <span class="keyword">int</span> id = item.getItemId();
+
+    <span class="comment">//noinspection SimplifiableIfStatement</span>
+    <span class="keyword">if</span> (id == R.id.action_settings) {
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">onOptionsItemSelected</span><span class="params">(item)</span></span>;
+}
+}
+</code></pre><p>3.Parcelable的实现，具体细节前面已经讲到了，就不多说了。</p>
+<pre><code><span class="keyword">package</span> me.androiddemo.canglangwenyue.androiddemo;
+
+<span class="keyword">import</span> android.os.Parcel;
+<span class="keyword">import</span> android.os.Parcelable;
+
+<span class="javadoc">/**
+ * Created by canglangwenyue on 12/5/14.
+ * Parcelable常用于Intent中进行自定义对象的传递
+ */</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Parcelable</span> </span>{
+
+
+<span class="keyword">public</span> String name;
+
+<span class="annotation">@Override</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">describeContents</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="annotation">@Override</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeToParcel</span><span class="params">(Parcel dest, <span class="keyword">int</span> flags)</span> </span>{
+
+    dest.writeString(name);
+
+}
+
+<span class="comment">/*
+需要重写Creator实现android.os.Parcelable接口的类必须持有一个实现了android.os.Parcelable接口的名为 CREATOR 的静态字段
+ */</span>
+
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Creator&lt;Person&gt; CREATOR = <span class="keyword">new</span> Parcelable.Creator&lt;Person&gt;() {
+
+    <span class="comment">/*
+    重写Creator方法
+     */</span>
+    <span class="annotation">@Override</span>
+    <span class="function"><span class="keyword">public</span> Person <span class="title">createFromParcel</span><span class="params">(Parcel source)</span> </span>{
+        Person person = <span class="keyword">new</span> Person();
+        person.name = source.readString();
+        <span class="keyword">return</span> person;
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> Person[] newArray(<span class="keyword">int</span> size) {
+        <span class="keyword">return</span> <span class="keyword">new</span> Person[<span class="number">0</span>];
+    }
+
+};
+
+}
+</code></pre><p>最后给出在MainActivity2中log打印的结果，眼见为实，哈哈：</p>
+<p><img src="http://cl.ly/image/0n1T2a3Y443M/Parcelable.png" alt="Alt text"></p>
+<p>再附上demo下载地址，希望对大家与帮助：<br><a href="http://download.csdn.net/detail/u010835702/8227511" target="_blank" rel="external">苍狼问月</a></p>
+
+      
+    </div>
+    <footer>
+      
+          
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <span class="jiathis_txt">分享到：</span>
+  <a class="jiathis_button_weixin">微信</a>
+  <a class="jiathis_button_tsina">新浪微博</a>
+  <a class="jiathis_button_renren">人人网</a>
+  <a class="jiathis_button_qzone">QQ空间</a>
+  <a class="jiathis_button_douban">豆瓣</a>
+  <a class="jiathis_button_pocket">Pocket</a>
+  <a href="http://www.jiathis.com/share?uid=901656" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=901656" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          <div class="clearfix"></div>
+          <nav id="pagination">
+  
+    <a href="/2014/12/05/javalangcloneable解析/" class="alignleft prev"><i class="fa fa-long-arrow-left"></i>Next</a>
+  
+  
+    <a href="/2014/12/03/写给我两年零三个月的大学生活/" class="alignright next">Prev<i class="fa fa-long-arrow-right"></i></a>
+  
+  <div class="clearfix"></div>
+</nav>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" data-thread-key="/2014/12/05/androidosparcelable文档自译/"></div>
+<!-- Duoshuo Comment END -->
+  
+</section>
+
+
+
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div>
+  
+  &copy; 2015 Wenyue
+  
+</div>
+Powered by <a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a> and <a href="http://pages.github.com/" title="GitHub Pages" target="_blank" rel="external">GitHub Pages</a>
+
+<div class="clearfix"></div></footer>
+  
+<script src="/js/jquery.imagesloaded.min.js" type="text/javascript"></script>
+<script src="/js/gallery.js" type="text/javascript"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+
+
+    <script type="text/javascript">
+        (function(){
+
+            $(window).scroll(function(){
+
+                var scrollTop = $(window).scrollTop();
+                if ( scrollTop >200 ){
+                    $("#main-nav").removeClass('normal_mode').addClass('top_mode');
+                } else{
+                    $("#main-nav").removeClass('top_mode').addClass('normal_mode');
+                }
+
+            });
+
+        })();
+    </script>
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox({
+      'titlePosition': 'inside'
+    });
+  })(jQuery);
+  </script>
+
+
+
+    
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wenyue"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+
+
+<script type="text/javascript">
+  
+  $(function(){
+
+    $('.title').hover(
+      function() {      
+        $(this).stop().animate(
+          {'marginLeft': '10px'}, 200
+        );   
+      }, 
+      function() {       
+        $(this).stop().animate({'marginLeft': '0px'}, 200);      
+      
+    });   
+
+  });
+
+</script>
+
+
+</body>
+</html>

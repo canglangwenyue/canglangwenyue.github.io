@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Wenyue‘s Blog</title>
+  <title>android studio module添加最新的com.android.support:appcompat-v7:21.0.0依赖报错 | Wenyue‘s Blog</title>
   <meta name="author" content="Wenyue">
   
   <meta name="description" content="java web android">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Hello World"/>
+  <meta property="og:title" content="android studio module添加最新的com.android.support:appcompat-v7:21.0.0依赖报错"/>
   <meta property="og:site_name" content="Wenyue‘s Blog"/>
 
   
@@ -73,28 +73,38 @@
   <div class="post-content">
     <header>
       
-      <time datetime="2015-05-01T14:08:48.000Z"><a href="/2015/05/01/hello-world/">周五, 5月 1 2015, 10:08:48 晚上</a></time>
+      <time datetime="2014-11-23T15:26:08.000Z"><a href="/2014/11/23/android-studio-module添加最新的comandroidsupportappcompat-v72100依赖报错/">周日, 11月 23 2014, 11:26:08 晚上</a></time>
 
   
-    <h1 class="title">Hello World</h1>
+    <h1 class="title">android studio module添加最新的com.android.support:appcompat-v7:21.0.0依赖报错</h1>
   
 
 
+
+  
+  <div class="tags">
+  	<i class="fa fa-tag"></i>
+    <a href="/tags/android开发/">android开发</a>
+  </div>
 
 <div class="clear"></div>
       
     </header>
     <div class="entry">
       
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>我的开发平台是Mac，测试机是MX3(API 19 android 4.4.4),我不确定其他平台是否出现该问题，所以提前说明一下，免得误人子弟。</p>
+<pre><code>今天再使用自定义<span class="tag">ActionBar</span>的时候，出现了一个很奇葩的错误，就是我为自己的<span class="tag">module</span>添加了最新的<span class="rule"><span class="attribute">com.android.support</span>:<span class="value">appcompat-v7:<span class="number">21.0</span>.<span class="number">0</span>依赖后，在Activity中使用  
+final ActionBar actionBar = <span class="function">getActionBar</span>()</span></span>;
+<span class="tag">actionBar</span><span class="class">.show</span>();
+来获取<span class="tag">ActionBar</span>时，抛出了<span class="tag">NullPointerException</span>异常，这让我百思不得其解。这在之前使用一直没用问题啊。。。。。于是，各种百度<span class="tag">google</span>，但是并未发现类似问题(我用了最新的<span class="tag">support</span>包)。最后，人品爆发，在<span class="tag">StackOverFlow</span>上找到了类似的问题，后来我意识到可能是     <span class="rule"><span class="attribute">com.android.support</span>:<span class="value">appcompat-v7:<span class="number">21.0</span>.<span class="number">0</span>版本太高，导致在android <span class="number">5.0</span>以下的sdk导致不兼容问题。估计，google的脑袋是被枪打了把，话说support包本就是用来做兼容的吧，在这个版本竟然成了导致不兼容的原因。。。。。</span></span>
+</code></pre><p>错误原因分析如下：<br>    在module的build.gradle文件里，如果用默认的自动依赖处理方式，如图所示：<br>    <img src="http://cl.ly/image/2b1E0c133p3d/supportv7.png" alt="Alt text"><br>编译时系统就会去依赖最新版的support：appcompat-v7:21.0.0 。按照之前的经验来说是不因该有问题的，但是据我的理解，目前appcompat-v7:21.0.0须使用android 5.0版本的build tool，而且build出来的程序只能在Android 5.0下运行，真屌啊。。。。我们4.4.4的用户混不下去了么？？？<br>所以解决方法也很简单：就是把appcompat-v7:21.0.0改为appcompat-v7:19.+<br>如下所示：</p>
+<pre><code><span class="keyword">dependencies</span> {
+<span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])
+<span class="keyword">compile</span> <span class="keyword">project</span>(<span class="string">':Library'</span>)
+<span class="keyword">compile</span> <span class="string">'com.android.support:support-v4:21.0.0'</span>
+<span class="keyword">compile</span> <span class="string">'com.android.support:appcompat-v7:19.+'</span>
+}
+</code></pre><p>PS: 发现国内论坛并未有人记载过此问题，所以我来记录一下，权当备忘录了。其中发了很多牢骚，还请见谅，因为这个问题耽误了我三个多小时。毕竟自己实力太菜啊，哈哈，菜鸟的高手养成计划已经开始了。</p>
 
       
     </div>
@@ -119,8 +129,10 @@
           <div class="clearfix"></div>
           <nav id="pagination">
   
+    <a href="/2014/11/27/android-view-详解/" class="alignleft prev"><i class="fa fa-long-arrow-left"></i>Next</a>
   
-    <a href="/2015/03/04/android-intent-机制/" class="alignright next">Prev<i class="fa fa-long-arrow-right"></i></a>
+  
+    <a href="/2014/11/17/android-listview-item点击展开/" class="alignright next">Prev<i class="fa fa-long-arrow-right"></i></a>
   
   <div class="clearfix"></div>
 </nav>
@@ -136,7 +148,7 @@
 
   
       <!-- Duoshuo Comment BEGIN -->
-<div class="ds-thread" data-thread-key="/2015/05/01/hello-world/"></div>
+<div class="ds-thread" data-thread-key="/2014/11/23/android-studio-module添加最新的comandroidsupportappcompat-v72100依赖报错/"></div>
 <!-- Duoshuo Comment END -->
   
 </section>
