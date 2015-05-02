@@ -87,7 +87,8 @@
 Parcel. Classes implementing the Parcelable <span class="keyword">interface</span> must also have a <span class="keyword">static</span> 
 field called CREATOR, which <span class="keyword">is</span> an <span class="built_in">object</span> implementing the Parcelable.Creator 
 <span class="keyword">interface</span>.
-</code></pre><p>该Interface用于实例可以被写入，并且可以从Parcel中恢复的classes(对于Parcel暂时只要知道它是一个存<br>放数据的容器就好了，我会在android IPC中写到它)。实现android.os.Parcelable接口的类必须持有一个实<br>现了android.os.Parcelable接口的名为 CREATOR 的静态字段。</p>
+</code></pre><a id="more"></a>
+<p>该Interface用于实例可以被写入，并且可以从Parcel中恢复的classes(对于Parcel暂时只要知道它是一个存<br>放数据的容器就好了，我会在android IPC中写到它)。实现android.os.Parcelable接口的类必须持有一个实<br>现了android.os.Parcelable接口的名为 CREATOR 的静态字段。</p>
 <p>android.os.Parcelable接口典型使用方式,这是官网的例子：</p>
 <pre><code>package me.androiddemo.canglangwenyue.androiddemo;
 

@@ -81,11 +81,12 @@
     <div class="entry">
       
         <p>我的开发平台是Mac，测试机是MX3(API 19 android 4.4.4),我不确定其他平台是否出现该问题，所以提前说明一下，免得误人子弟。</p>
-<pre><code>今天再使用自定义<span class="tag">ActionBar</span>的时候，出现了一个很奇葩的错误，就是我为自己的<span class="tag">module</span>添加了最新的<span class="rule"><span class="attribute">com.android.support</span>:<span class="value">appcompat-v7:<span class="number">21.0</span>.<span class="number">0</span>依赖后，在Activity中使用  
-final ActionBar actionBar = <span class="function">getActionBar</span>()</span></span>;
-<span class="tag">actionBar</span><span class="class">.show</span>();
-来获取<span class="tag">ActionBar</span>时，抛出了<span class="tag">NullPointerException</span>异常，这让我百思不得其解。这在之前使用一直没用问题啊。。。。。于是，各种百度<span class="tag">google</span>，但是并未发现类似问题(我用了最新的<span class="tag">support</span>包)。最后，人品爆发，在<span class="tag">StackOverFlow</span>上找到了类似的问题，后来我意识到可能是     <span class="rule"><span class="attribute">com.android.support</span>:<span class="value">appcompat-v7:<span class="number">21.0</span>.<span class="number">0</span>版本太高，导致在android <span class="number">5.0</span>以下的sdk导致不兼容问题。估计，google的脑袋是被枪打了把，话说support包本就是用来做兼容的吧，在这个版本竟然成了导致不兼容的原因。。。。。</span></span>
-</code></pre><p>错误原因分析如下：<br>    在module的build.gradle文件里，如果用默认的自动依赖处理方式，如图所示：<br>    <img src="http://cl.ly/image/2b1E0c133p3d/supportv7.png" alt="Alt text"><br>编译时系统就会去依赖最新版的support：appcompat-v7:21.0.0 。按照之前的经验来说是不因该有问题的，但是据我的理解，目前appcompat-v7:21.0.0须使用android 5.0版本的build tool，而且build出来的程序只能在Android 5.0下运行，真屌啊。。。。我们4.4.4的用户混不下去了么？？？<br>所以解决方法也很简单：就是把appcompat-v7:21.0.0改为appcompat-v7:19.+<br>如下所示：</p>
+<p>今天再使用自定义ActionBar的时候，出现了一个很奇葩的错误，就是我为自己的module添加了最新的<br>com.android.support:appcompat-v7:21.0.0依赖后，在Activity中使用</p>
+<pre><code>final <span class="type">ActionBar</span> actionBar = getActionBar<span class="literal">()</span>;
+actionBar.show<span class="literal">()</span>;
+</code></pre><a id="more"></a>
+<p>来获取ActionBar时，抛出了NullPointerException异常，这让我百思不得其解。这在之前使用一直没用问<br>题啊。。。。。于是，各种百度google，但是并未发现类似问题(我用了最新的support包)。最后，人品<br>爆发，在StackOverFlow上找到了类似的问题，后来我意识到可能是com.android.support:appcompat<br>-v7:21.0.0版本太高，导致在android 5.0以下的sdk导致不兼容问题。估计，google的脑袋是被枪打<br>了把，话说support包本就是用来做兼容的吧，在这个版本竟然成了导致不兼容的原因。。。。。</p>
+<p>错误原因分析如下：<br>    在module的build.gradle文件里，如果用默认的自动依赖处理方式，如图所示：<br>    <img src="http://cl.ly/image/2b1E0c133p3d/supportv7.png" alt="Alt text"><br>编译时系统就会去依赖最新版的support：appcompat-v7:21.0.0 。按照之前的经验来说是不因该有问题的，但是据我的理解，目前appcompat-v7:21.0.0须使用android 5.0版本的build tool，而且build出来的程序只能在Android 5.0下运行，真屌啊。。。。我们4.4.4的用户混不下去了么？？？<br>所以解决方法也很简单：就是把appcompat-v7:21.0.0改为appcompat-v7:19.+<br>如下所示：</p>
 <pre><code><span class="keyword">dependencies</span> {
 <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])
 <span class="keyword">compile</span> <span class="keyword">project</span>(<span class="string">':Library'</span>)

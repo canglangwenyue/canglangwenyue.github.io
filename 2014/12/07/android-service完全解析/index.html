@@ -88,7 +88,8 @@
   <span class="built_in">to</span> <span class="operator">a</span> service <span class="built_in">to</span> interact <span class="operator">with</span> <span class="keyword">it</span> <span class="operator">and</span> even perform interprocess communication 
   (IPC). For example, <span class="operator">a</span> service might handle network transactions, play music, 
   perform <span class="built_in">file</span> I/O, <span class="operator">or</span> interact <span class="operator">with</span> <span class="operator">a</span> content provider, all <span class="built_in">from</span> <span class="operator">the</span> background.
-</code></pre><p>以我的理解呢，大概就是说：</p>
+</code></pre><a id="more"></a>
+<p>以我的理解呢，大概就是说：</p>
 <p>service是一个没有用户界面并且运行在后台以执行长时间耗时操作的app application组件。其它的application 组件能够启动service，而且service将一直执行下去，即使用户从当前service所属的application切换到了其它的application。另外，一个组件可以绑定到一个服务来和它交互，甚至是进程间通信(IPC机制)。for example，一个服务可能会处理网络操作，播放音乐，处理文件的IO操作，或者与content provider交互，所有的操作都是在后台完成的。</p>
 <p>A service can essentially take two forms:</p>
 <pre><code><span class="number">1.</span>started

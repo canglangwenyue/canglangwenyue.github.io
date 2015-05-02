@@ -81,11 +81,9 @@
     <div class="entry">
       
         <p>好吧，现在来看一下在android里面使用sqlite数据库的一些基本操作吧。</p>
-<pre><code>对于大多数<span class="keyword">app</span>而言对数据库的要求很简单，无非CURD，仅此而已。而我个人比较喜欢将所要使用的相应数据    表封装成javabean再进行操作，这样会显得逻辑比较清晰。
-</code></pre><p>首先，我们写一个Entity：</p>
-<pre><code><span class="keyword">package</span> wenyue.justdoit.entity;
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">todoData</span> </span>{
+<p>对于大多数app而言对数据库的要求很简单，无非CURD，仅此而已。而我个人比较喜欢将所要使用的相应数据<br>表封装成javabean再进行操作，这样会显得逻辑比较清晰。</p>
+<p>首先，我们写一个Entity：<br><a id="more"></a><br>    package wenyue.justdoit.entity;</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">todoData</span> {
 <span class="keyword">private</span> String todotadkname;
 <span class="keyword">private</span> <span class="keyword">int</span> id;
 

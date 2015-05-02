@@ -5,8 +5,8 @@
   ele_cover.appendTo($("#header"));
   // set height of the cover  
   var ele_profile = $("#profile");
-  var h_win = $(window).height(), h_nav = $("#main-nav").height(), h_cover = h_win - h_nav, 
-  h_profile = ele_profile.height(), padTop_profile = (h_win - h_profile) * 0.4;
+  var h_win = $(window).height(), h_nav = $("#main-nav").height(), h_cover = (h_win - h_nav)*0.5, 
+  h_profile = ele_profile.height(), padTop_profile = (h_win - h_profile) * 0.1;
   ele_cover.height(h_cover);
   // set margin-top of profile
   ele_profile.css("padding-top", padTop_profile);

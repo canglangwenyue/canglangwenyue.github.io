@@ -82,8 +82,7 @@
       
         <p>android.View.View(即View)类是以矩形的方式显示在屏幕上，View是用户界面控件的基础。View的继承层次关系如下图：</p>
 <p><img src="http://cl.ly/image/14202e2K001x/ViewClassOverView.png" alt="Alt text"></p>
-<p>可以看到所有的界面控件都是View的子类。简单证实一下，每当你用findViewByIds(R.id.xx)时总要将其强转，因为该方法返回的是一个View实例，有木有!!!其中不得不提View的subClass ViewGroup。Android系统中的所有UI类都是建立在View和ViewGroup这两个类的基础上的。所有View的子类成为”Widget”，所有ViewGroup的子类成为”Layout”。View和ViewGroup之间采用了组合设计模式，可以使得“部分-整体”同等对待。ViewGroup作为布局容器类的最上层，布局容器里面又可以有View和ViewGroup。通过这种方式，我们获得了UI界面的组合方式。</p>
-<p>ViewGroup的子类用不同的方式来管理容器中View控件的摆放位置以及显示方式；但是，对于view控件具体摆放到什么位置，以及大小等属性则需要每个布局类的内部类LayoutParams来进行处理，该类是ViewGroup的内部类，有该类的子类具体实现LayoutParams类。</p>
+<p>可以看到所有的界面控件都是View的子类。简单证实一下，每当你用findViewByIds(R.id.xx)时总要将其强转，因为该方法返回的是一个View实例，有木有!!!其中不得不提View的subClass ViewGroup。Android系统中的所有UI类都是建立在View和ViewGroup这两个类的基础上的。所有View的子类成为”Widget”，所有ViewGroup的子类成为”Layout”。View和ViewGroup之间采用了组合设计模式，可以使得“部分-整体”同等对待。ViewGroup作为布局容器类的最上层，布局容器里面又可以有View和ViewGroup。通过这种方式，我们获得了UI界面的组合方式。<br><a id="more"></a><br>ViewGroup的子类用不同的方式来管理容器中View控件的摆放位置以及显示方式；但是，对于view控件具体摆放到什么位置，以及大小等属性则需要每个布局类的内部类LayoutParams来进行处理，该类是ViewGroup的内部类，有该类的子类具体实现LayoutParams类。</p>
 <p>可以看到android中所有的UI控件都是View的子类，所以你可以通过继承View类来实现自定义控件，例如之前博客中提到的圆形进度条就是一个例子。注意。此时你需要重载View的构造函数。View的构造函数有三个，但常用的是第一个和第二个，比较简单，有需要的可以查下文档。</p>
 <p>一.而动态创建View和ViewGroup一般有以下2种方式可以实现。</p>
 <p>1.每创建一个UI控件就添加到布局中，但是这种方式有个缺点，当你要动态添加的按钮过多时，就会显得过于麻烦。</p>

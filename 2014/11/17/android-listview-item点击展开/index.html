@@ -80,10 +80,8 @@
     </header>
     <div class="entry">
       
-        <pre><code>最近做项目真是头疼呢？之前想用<span class="variable">ListViewAnnotation</span>来着，就是可以实现类似于<span class="function_or_atom">android</span> 通知栏滑动删除的效果。好像是一位大牛自己一个人写的吧。我在这里首先向他致敬。不过，话说回来，实现原理也是比较易于理解的，就是检测你的滑动距离以及速度，再作出判断，进行操作。具体大家参考下<span class="variable">Google</span> <span class="function_or_atom">keep</span>的两种列表模式下滑动删除的操作就理解类。
-
-非常不幸的事，我再布局中用了<span class="function_or_atom">fragment</span>和<span class="function_or_atom">biewpager</span>，所以产生了手势冲突，我为此改写了<span class="function_or_atom">library</span>里的手势操作检测方法，最后勉强改出来的。但是<span class="exclamation_mark">!</span><span class="exclamation_mark">!</span><span class="exclamation_mark">!</span><span class="exclamation_mark">!</span>效果实在惨不忍睹，只好作罢，最后，思来想去，我决定使用<span class="function_or_atom">listview</span> <span class="function_or_atom">item</span>点击展开来实现我想要的效果。
-</code></pre><p>好吧，废话说了很多，终于要进入正题了。<br>首先补充三点知识：</p>
+        <p>   最近做项目真是头疼呢？之前想用ListViewAnnotation来着，就是可以实现类似于android 通知栏<br>   滑动删除的效果。好像是一位大牛自己一个人写的吧。我在这里首先向他致敬。不过，话说回来，实现<br>   原理也是比较易于理解的，就是检测你的滑动距离以及速度，再作出判断，进行操作。具体大家参考<br>   下Google keep的两种列表模式下滑动删除的操作就理解类。</p>
+<p>   非常不幸的事，我再布局中用了fragment和biewpager，所以产生了手势冲突，我为此改写了librar<br>   y里的手势操作检测方法，最后勉强改出来的。但是!!!!效果实在惨不忍睹，只好作罢，最后，思来<br>   想去，我决定使用listview item点击展开来实现我想要的效果。好吧，废话说了很多，终于要进入<br>   正题了。<br><a id="more"></a><br>首先补充三点知识：</p>
 <p>第一点：</p>
 <pre><code>getLayoutParams<span class="literal">()</span>方法和setLayoutParams<span class="literal">()</span>用法
 首先，我们利用getLayoutParams<span class="literal">()</span>来获得指定控件的<span class="type">LayoutParams</span>。例如：

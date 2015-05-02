@@ -99,7 +99,8 @@
     String StrTest = savedInstanceState.getString(<span class="string">"StrTest"</span>);
     Log.e(TAG, <span class="string">"onRestoreInstanceState+IntTest="</span>+IntTest+<span class="string">"+StrTest="</span>+StrTest);
 }
-</code></pre><p>需要注意的是，这两个method都是非生命周期method(区别于onCreate等)。这两个method只有在由android framework kill一个Activity(内存不足，用户直接按home键等等)才会触发，你可以在此存储一些数据，这样就可能在用户下次进入时恢复到之前的状态。而当用户正常退出一个Activity时(例如：按下back键)则不会触发这两个method。</p>
+</code></pre><a id="more"></a>
+<p>需要注意的是，这两个method都是非生命周期method(区别于onCreate等)。这两个method只有在由android framework kill一个Activity(内存不足，用户直接按home键等等)才会触发，你可以在此存储一些数据，这样就可能在用户下次进入时恢复到之前的状态。而当用户正常退出一个Activity时(例如：按下back键)则不会触发这两个method。</p>
 <pre><code>既然这两个<span class="keyword">method</span>你不一定会被触发，那么我们来测试一下，它们在什么情况下会被触发呢？
 </code></pre><p>首先是onSaveInstanceState(Bundle savedInstanceState):</p>
 <pre><code>按照文档解释实说当activity容易被销毁时会触发该<span class="keyword">method</span>，也就是该activity处于栈顶的时候。
