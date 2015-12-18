@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>android View 不同状态分析 | 季高</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="hljs.initHighlightingOnLoad();
+ $(document).ready(function(){      $(“h2,h3,h4,h5,h6”).each(function(i,item){        var tag = $(item).get(0).localName;        $(item).attr(“id”,”wow”+i);        $(“#c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android View 不同状态分析">
+<meta property="og:url" content="http://canglangwenyue.com/2015/06/21/android-View-不同状态分析/index.html">
+<meta property="og:site_name" content="季高">
+<meta property="og:description" content="hljs.initHighlightingOnLoad();
+ $(document).ready(function(){      $(“h2,h3,h4,h5,h6”).each(function(i,item){        var tag = $(item).get(0).localName;        $(item).attr(“id”,”wow”+i);        $(“#c">
+<meta property="og:image" content="http://cdn1.snapgram.co/imgs/2015/06/21/2015-06-2122.39.51.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android View 不同状态分析">
+<meta name="twitter:description" content="hljs.initHighlightingOnLoad();
+ $(document).ready(function(){      $(“h2,h3,h4,h5,h6”).each(function(i,item){        var tag = $(item).get(0).localName;        $(item).attr(“id”,”wow”+i);        $(“#c">
+  
+    <link rel="alternative" href="/atom.xml" title="季高" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">季高</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">他年我若为青帝，抱死桃花一处开!</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>Тэги</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>О сайте</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="/#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Reading/" style="font-size: 10px;">Reading</a><a href="/tags/android/" style="font-size: 20px;">android</a><a href="/tags/java/" style="font-size: 10px;">java</a><a href="/tags/点滴/" style="font-size: 15px;">点滴</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">季高</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="null" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">季高</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">他年我若为青帝，抱死桃花一处开!</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="/#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-View-不同状态分析" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/21/android-View-不同状态分析/" class="article-date">
+  	<time datetime="2015-06-21T05:46:38.000Z" itemprop="datePublished">2015-06-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android View 不同状态分析
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" href="http://yandex.st/highlightjs/6.2/styles/googlecode.min.css">
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<p><script>hljs.initHighlightingOnLoad();</script></p>
+<p><script type="text/javascript"><br> $(document).ready(function(){<br>      $(“h2,h3,h4,h5,h6”).each(function(i,item){<br>        var tag = $(item).get(0).localName;<br>        $(item).attr(“id”,”wow”+i);<br>        $(“#category”).append(‘<a class="new'+tag+'" href="#wow'+i+'">‘+$(this).text()+’</a></br>‘);<br>        $(“.newh2”).css(“margin-left”,0);<br>        $(“.newh3”).css(“margin-left”,20);<br>        $(“.newh4”).css(“margin-left”,40);<br>        $(“.newh5”).css(“margin-left”,60);<br>        $(“.newh6”).css(“margin-left”,80);<br>      });<br> });<br></script></p>
+<div id="category"></div>
+
+<h2 id="写在前面的话">写在前面的话</h2><p>   接触过android开发一段时间的人应该至少都听说过android View的五种状态。最明显的就是设置selector来使用它。今天我就再接再厉回顾一下android View的几种不同状态，并顺便总结下selector的用法，因为这些工作迟早都要做，就乘着考试前的闲暇来完成吧。</p>
+<p>   触摸反馈是android机遇触摸反馈的UI系统的很重要的一部分。所以一般View的状态改变能够在一定程度上反馈出用户的交互轨迹。就先从View的常见的五种状态说明开始吧。<br><a id="more"></a></p>
+<h2 id="View的六种状态">View的六种状态</h2><h3 id="Pressed">Pressed</h3><p>   如果用户点击一个了一个clickable View，该View将处于Pressed状态.而clickable属性你可以通过以下方式来设置。</p>
+   <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">XML</span>:<span class="value"></span><br><span class="line">android:clickable=<span class="string">"false"</span></span><br><span class="line">Java:</span><br><span class="line">View.<span class="function">setClickable</span>(boolean)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>   <strong>但是，如果你为该View设置了View.OnClickListener,那么该View将会自动地被设置为clickable,而即使你已经设置android:clickable=”false”也不会生效</strong></p>
+<h3 id="Focused">Focused</h3><p>   focused用于指示当前哪个View获得了input focus。拿到input focus的View会得到输入事件，例如点击按钮。我们可以用requestFocus()方法来为View申请获取焦点，如果requestFocus()返回true，那么申请的View将会拿到焦点。而一般情况下，View只有在focusable 和focusable in touch mode同时满足的条件下才能获得焦点(TextView).</p>
+<p>   Note:</p>
+<p>   <strong>selected状态</strong>用于focus(android:state_focused)状态不完全成立时 (such as when list view has focus and an item within it is selected with a d-pad).</p>
+<h3 id="Activated">Activated</h3><p>   可以用activated来表示处于交互中的View被选中。所以可以通过该属性来设置ViewPager 的tab高亮来表示当前可见的page(tabView.setActivitated(true))。</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Changes <span class="keyword">the</span> activated state <span class="keyword">of</span> this view. A view can be activated <span class="keyword">or</span> <span class="keyword">not</span>.</span><br><span class="line"> * Note <span class="keyword">that</span> activation <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">the</span> same <span class="keyword">as</span> selection.  Selection <span class="keyword">is</span></span><br><span class="line"> * a transient <span class="keyword">property</span>, representing <span class="keyword">the</span> view (hierarchy) <span class="keyword">the</span> user <span class="keyword">is</span></span><br><span class="line"> * currently interacting <span class="keyword">with</span>.  Activation <span class="keyword">is</span> a longer-term state <span class="keyword">that</span> <span class="keyword">the</span></span><br><span class="line"> * user can move views <span class="keyword">in</span> <span class="keyword">and</span> <span class="keyword">out of</span>.  For example, <span class="keyword">in</span> a <span class="type">list</span> view <span class="keyword">with</span></span><br><span class="line"> * single <span class="keyword">or</span> multiple selection enabled, <span class="keyword">the</span> views <span class="keyword">in</span> <span class="keyword">the</span> current selection</span><br><span class="line"> * <span class="keyword">set</span> are activated.  (Um, yeah, we are deeply sorry <span class="keyword">about</span> <span class="keyword">the</span> terminology</span><br><span class="line"> * here.)  The activated state <span class="keyword">is</span> propagated down <span class="keyword">to</span> children <span class="keyword">of</span> <span class="keyword">the</span> view <span class="keyword">it</span></span><br><span class="line"> * <span class="keyword">is</span> <span class="keyword">set</span> <span class="function_start"><span class="keyword">on</span>.</span></span><br><span class="line"> *</span><br><span class="line"> * @param activated <span class="constant">true</span> <span class="keyword">if</span> <span class="keyword">the</span> view must be activated, <span class="constant">false</span> otherwise</span><br><span class="line"> */</span><br><span class="line">public void setActivated(<span class="type">boolean</span> activated) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Enabled">Enabled</h3><p>   表示当前View是否可用，如果mView.setEnable(false),那么该View将不会响应onTouch事件。这个属性很常用。例如：你可以设置“登录”button是disabled ，知道用户输入了正确的注册或者登录信息。这样的话，就会对用户产生一个视觉上的提示。</p>
+<h3 id="window_focused">window_focused</h3><p>   用于表示当前窗口是否<strong>正在处于交互状态</strong>，改状态由OS来设置(多任务切换)。</p>
+<h3 id="selected">selected</h3><p>   表示View是否被选中，一个窗口中可以有多个View被选中，可以使用setSelected()来设置。</p>
+<p>==================</p>
+<p>就介绍这几种吧，关于View状态的更多的信息，可以查看<a href="http://developer.android.com/guide/topics/resources/drawable-resource.html#StateList" target="_blank" rel="external">官方文档</a></p>
+<h2 id="Selector使用">Selector使用</h2><p>在drawable下定义一个xxx.xml文件</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml <span class="variable">version=</span><span class="string">"1.0"</span> <span class="variable">encoding=</span><span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;selector xmlns:<span class="variable">android=</span><span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span><br><span class="line">	&lt;item android:<span class="variable">state_enabled=</span><span class="string">"false"</span> android:<span class="variable">drawable=</span><span class="string">"@android:color/darker_gray"</span> /&gt;</span><br><span class="line"></span><br><span class="line">	&lt;item android:<span class="variable">state_activated=</span><span class="string">"true"</span> android:<span class="variable">state_pressed=</span><span class="string">"true"</span> android:<span class="variable">drawable=</span><span class="string">"@android:color/holo_red_light"</span> /&gt;</span><br><span class="line">	&lt;item android:<span class="variable">state_activated=</span><span class="string">"true"</span> android:<span class="variable">state_focused=</span><span class="string">"true"</span> android:<span class="variable">drawable=</span><span class="string">"@android:color/holo_purple"</span> /&gt;</span><br><span class="line">	&lt;item android:<span class="variable">state_activated=</span><span class="string">"true"</span> android:<span class="variable">drawable=</span><span class="string">"@android:color/holo_orange_dark"</span> /&gt;</span><br><span class="line"></span><br><span class="line">	&lt;item android:<span class="variable">state_pressed=</span><span class="string">"true"</span> android:<span class="variable">drawable=</span><span class="string">"@android:color/holo_blue_light"</span> /&gt;</span><br><span class="line">	&lt;item android:<span class="variable">state_focused=</span><span class="string">"true"</span> android:<span class="variable">drawable=</span><span class="string">"@android:color/holo_green_light"</span> /&gt;</span><br><span class="line">	&lt;item android:<span class="variable">drawable=</span><span class="string">"@android:color/transparent"</span> /&gt;</span><br><span class="line">&lt;/selector&gt;</span><br></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;RelativeLayout android:<span class="variable">id=</span><span class="string">"@+id/my_layout"</span></span><br><span class="line">                xmlns:<span class="variable">android=</span><span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">                xmlns:<span class="variable">tools=</span><span class="string">"http://schemas.android.com/tools"</span></span><br><span class="line">                android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span></span><br><span class="line">                android:<span class="variable">layout_height=</span><span class="string">"match_parent"</span></span><br><span class="line">                tools:<span class="variable">context=</span><span class="string">".MainActivity"</span>&gt;</span><br><span class="line"></span><br><span class="line">	&lt;TextView</span><br><span class="line">		android:<span class="variable">id=</span><span class="string">"@+id/my_text"</span></span><br><span class="line">		android:<span class="variable">gravity=</span><span class="string">"center"</span></span><br><span class="line">		android:<span class="variable">layout_width=</span><span class="string">"150dp"</span></span><br><span class="line">		android:<span class="variable">layout_height=</span><span class="string">"150dp"</span></span><br><span class="line">		android:<span class="variable">background=</span><span class="string">"@drawable/text_view_selector"</span></span><br><span class="line">		android:<span class="variable">text=</span><span class="string">"@string/hello_world"</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="view的drawable更新流程">view的drawable更新流程</h2><p><strong>那么，android中根据View的不同状态来改变其对应的background是如何实现的呢？</strong></p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">    <span class="keyword">*</span> Give this view focus. This will cause</span><br><span class="line">    <span class="keyword">*</span> &#123;<span class="comment">@link #onFocusChanged(boolean, int, android.graphics.Rect)&#125; to be called.</span></span><br><span class="line">    <span class="keyword">*</span></span><br><span class="line">    <span class="keyword">*</span> Note: this does not check whether this &#123;<span class="comment">@link View&#125; should get focus, it just</span></span><br><span class="line">    <span class="keyword">*</span> gives it focus no matter what.  It should only be called internally by framework</span><br><span class="line">    <span class="keyword">*</span> code that knows what it is doing, namely &#123;<span class="comment">@link #requestFocus(int, Rect)&#125;.</span></span><br><span class="line">    <span class="keyword">*</span></span><br><span class="line">    <span class="keyword">*</span> <span class="comment">@param direction values are &#123;@link View#FOCUS_UP&#125;, &#123;@link View#FOCUS_DOWN&#125;,</span></span><br><span class="line">    <span class="keyword">*</span>        &#123;<span class="comment">@link View#FOCUS_LEFT&#125; or &#123;@link View#FOCUS_RIGHT&#125;. This is the direction which</span></span><br><span class="line">    <span class="keyword">*</span>        focus moved when requestFocus() is called. It may not always</span><br><span class="line">    <span class="keyword">*</span>        apply, in which case use the default View.FOCUS_DOWN.</span><br><span class="line">    <span class="keyword">*</span> <span class="comment">@param previouslyFocusedRect The rectangle of the view that had focus</span></span><br><span class="line">    <span class="keyword">*</span>        prior in this View's coordinate system.</span><br><span class="line">    <span class="keyword">*</span>/</span><br><span class="line">   void handleFocusGainInternal(<span class="comment">@FocusRealDirection int direction, Rect previouslyFocusedRect) &#123;</span></span><br><span class="line">       if (DBG) &#123;</span><br><span class="line">           System.out.println(this + <span class="string">" requestFocus()"</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       if ((mPrivateFlags &amp; PFLAG_FOCUSED) == 0) &#123;</span><br><span class="line">           mPrivateFlags <span class="string">|= PFLAG_FOCUSED;</span><br><span class="line"></span><br><span class="line">           View oldFocus = (mAttachInfo != null) ? getRootView().findFocus() : null;</span><br><span class="line"></span><br><span class="line">           if (mParent != null) &#123;</span><br><span class="line">               mParent.requestChildFocus(this, this);</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           if (mAttachInfo != null) &#123;</span><br><span class="line">               mAttachInfo.mTreeObserver.dispatchOnGlobalFocusChange(oldFocus, this);</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           onFocusChanged(true, direction, previouslyFocusedRect);</span><br><span class="line">           refreshDrawableState();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到View.java中的这个方法绘制View获得焦点时触发，而它的实质最后是调用了refreshDrawableState();</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * C<span class="literal">all</span> this <span class="keyword">to</span> force a view <span class="keyword">to</span> update its drawable <span class="keyword">state</span>. This will cause</span><br><span class="line">     * drawableStateChanged <span class="keyword">to</span> be called <span class="keyword">on</span> this view. Views that are interested</span><br><span class="line">     * <span class="keyword">in</span> the new <span class="keyword">state</span> should call getDrawableState.</span><br><span class="line">     *</span><br><span class="line">     * @see <span class="comment">#drawableStateChanged</span></span><br><span class="line">     * @see <span class="comment">#getDrawableState</span></span><br><span class="line">     */</span><br><span class="line">    public void refreshDrawableState() &#123;</span><br><span class="line">        mPrivateFlags |= PFLAG_DRAWABLE_STATE_DIRTY;</span><br><span class="line">        drawableStateChanged();</span><br><span class="line"></span><br><span class="line">        ViewParent parent = mParent;</span><br><span class="line">        if (parent != null) &#123;</span><br><span class="line">            parent.childDrawableStateChanged(this);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>注释写的很清楚，这个方法的做同事强制更新一个View的drawable state，它会在view状态改变时被回调而改变该View的drawable state。然后它主要是调用了drawableStateChanged()方法。</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">    * This function is called whenever the <span class="keyword">state</span> of the view changes <span class="keyword">in</span> such</span><br><span class="line">    * a way that it impacts the <span class="keyword">state</span> of drawables being shown.</span><br><span class="line">    * <span class="variable">&lt;p&gt;</span></span><br><span class="line">    * If the View has a StateListAnimator, it will also be called <span class="keyword">to</span> run necessary <span class="keyword">state</span></span><br><span class="line">    * change animations.</span><br><span class="line">    * <span class="variable">&lt;p&gt;</span></span><br><span class="line">    * Be sure <span class="keyword">to</span> call through <span class="keyword">to</span> the superclass when overriding this function.</span><br><span class="line">    *</span><br><span class="line">    * @see Drawable<span class="comment">#setState(int[])</span></span><br><span class="line">    */</span><br><span class="line">   protected void drawableStateChanged() &#123;</span><br><span class="line">   	//传入该View的drawable对象</span><br><span class="line">       final Drawable d = mBackground;</span><br><span class="line">       if (d != null &amp;&amp; d.isStateful()) &#123;</span><br><span class="line">           d.<span class="built_in">set</span>State(getDrawableState());//更新View为对应状态下的Drawable对象</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       if (mStateListAnimator != null) &#123;</span><br><span class="line">           mStateListAnimator.<span class="built_in">set</span>State(getDrawableState());</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">    /**</span><br><span class="line">    * Return an array of resource IDs of the drawable states representing the</span><br><span class="line">    * current <span class="keyword">state</span> of the view.</span><br><span class="line">    *返回一个drawable states对应的resource IDs的array来代表view的当前<span class="keyword">state</span>。</span><br><span class="line">    *</span><br><span class="line">    * @return The current drawable <span class="keyword">state</span></span><br><span class="line">    *</span><br><span class="line">    * @see Drawable<span class="comment">#setState(int[])</span></span><br><span class="line">    * @see <span class="comment">#drawableStateChanged()</span></span><br><span class="line">    * @see <span class="comment">#onCreateDrawableState(int)</span></span><br><span class="line">    */</span><br><span class="line">   public final int[] getDrawableState() &#123;</span><br><span class="line">       if ((mDrawableState != null) &amp;&amp; ((mPrivateFlags &amp; </span><br><span class="line">       PFLAG_DRAWABLE_STATE_DIRTY) == <span class="number">0</span>)) &#123;</span><br><span class="line">           return mDrawableState;</span><br><span class="line">       &#125; else &#123;</span><br><span class="line">           mDrawableState = <span class="keyword">on</span>CreateDrawableState(<span class="number">0</span>);</span><br><span class="line">           mPrivateFlags &amp;= ~PFLAG_DRAWABLE_STATE_DIRTY;</span><br><span class="line">           return mDrawableState;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   /**</span><br><span class="line">    * Specify a <span class="built_in">set</span> of states <span class="keyword">for</span> the drawable. These are use-case specific,</span><br><span class="line">    * so see the relevant documentation. As an example, the background <span class="keyword">for</span></span><br><span class="line">    * widgets like Button understand the following states:</span><br><span class="line">    * [&#123;@link android.R.attr<span class="comment">#state_focused&#125;,</span></span><br><span class="line">    *  &#123;@link android.R.attr<span class="comment">#state_pressed&#125;].</span></span><br><span class="line">    *</span><br><span class="line">    * <span class="variable">&lt;p&gt;</span>If the new <span class="keyword">state</span> you are supplying causes the appearance of the</span><br><span class="line">    * Drawable <span class="keyword">to</span> change, then it is responsible <span class="keyword">for</span> calling</span><br><span class="line">    * &#123;@link <span class="comment">#invalidateSelf&#125; in order to have itself redrawn, &lt;em&gt;and&lt;/em&gt;</span></span><br><span class="line">    * true will be returned <span class="keyword">from</span> this function.</span><br><span class="line">    *</span><br><span class="line">    * <span class="variable">&lt;p&gt;</span>Note: The Drawable holds a reference <span class="keyword">on</span> <span class="keyword">to</span> <span class="variable">&lt;var&gt;</span><span class="keyword">state</span>Set<span class="variable">&lt;/var&gt;</span></span><br><span class="line">    * until a new <span class="keyword">state</span> array is given <span class="keyword">to</span> it, so you must not modify this</span><br><span class="line">    * array during that time.<span class="variable">&lt;/p&gt;</span></span><br><span class="line">    *</span><br><span class="line">    * @param <span class="keyword">state</span>Set The new <span class="built_in">set</span> of states <span class="keyword">to</span> be displayed.</span><br><span class="line">    *</span><br><span class="line">    * @return Returns true if this change <span class="keyword">in</span> <span class="keyword">state</span> has caused the appearance</span><br><span class="line">    * of the Drawable <span class="keyword">to</span> change (hence requiring an invalidate), otherwise</span><br><span class="line">    * returns false.</span><br><span class="line">    */</span><br><span class="line">   </span><br><span class="line">   //Drawable.java中</span><br><span class="line">    public boolean <span class="built_in">set</span>State(final int[] <span class="keyword">state</span>Set) &#123;</span><br><span class="line">       if (!Arrays.equals(mStateSet, <span class="keyword">state</span>Set)) &#123;</span><br><span class="line">       //如果状态态值改变，就回调<span class="keyword">on</span>StateChange()</span><br><span class="line">           mStateSet = <span class="keyword">state</span>Set;</span><br><span class="line">           return <span class="keyword">on</span>StateChange(<span class="keyword">state</span>Set);</span><br><span class="line">       &#125;</span><br><span class="line">       return false;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到Drawable类abstract class，所以的找到一个该方法的extends类，通过查看文档发现了如下的继承关系。<br><img src="http://cdn1.snapgram.co/imgs/2015/06/21/2015-06-2122.39.51.png" alt=""><br> 而StateListDrawable类的作用就是处理selector。看<a href="https://developer.android.com/reference/android/graphics/drawable/StateListDrawable.html" target="_blank" rel="external">文档说明</a></p>
+ <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Class Overview</span><br><span class="line"> </span><br><span class="line">Lets you assign <span class="operator">a</span> <span class="built_in">number</span> <span class="operator">of</span> graphic images <span class="built_in">to</span> <span class="operator">a</span> single Drawable <span class="operator">and</span> swap out <span class="operator">the</span> visible <span class="keyword">item</span> <span class="keyword">by</span> <span class="operator">a</span> <span class="keyword">string</span> ID <span class="built_in">value</span>.</span><br><span class="line"></span><br><span class="line">It can be defined <span class="operator">in</span> <span class="operator">an</span> XML <span class="built_in">file</span> <span class="operator">with</span> <span class="operator">the</span> &lt;selector&gt; <span class="keyword">element</span>. Each state Drawable is defined <span class="operator">in</span> <span class="operator">a</span> nested &lt;<span class="keyword">item</span>&gt; <span class="keyword">element</span>. For more information, see <span class="operator">the</span> guide <span class="built_in">to</span> Drawable Resources.</span><br></pre></td></tr></table></figure>
+<p>所以，接下来让我们进入StateListDrawable.onStateChange(int[] stateSet)方法</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onStateChange</span><span class="params">(<span class="keyword">int</span>[] stateSet)</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//返回第一个匹配当前状态的drawable对象的索引</span></span><br><span class="line">        <span class="keyword">int</span> idx = mStateListState.indexOfStateSet(stateSet);</span><br><span class="line">        <span class="keyword">if</span> (DEBUG) android.util.Log.i(TAG, <span class="string">"onStateChange "</span> + <span class="keyword">this</span> + <span class="string">" states "</span></span><br><span class="line">                + Arrays.toString(stateSet) + <span class="string">" found "</span> + idx);</span><br><span class="line">        <span class="keyword">if</span> (idx &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            idx = mStateListState.indexOfStateSet(StateSet.WILD_CARD);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//获取idx索引所对应的drawable对象，并保存在mCurrDrawable</span></span><br><span class="line">        <span class="keyword">if</span> (selectDrawable(idx)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">onStateChange</span><span class="params">(stateSet)</span></span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在看一下StateListDrawable类相关的知识</p>
+<h3 id="StateListDrawable类">StateListDrawable类</h3><p>这个类我觉得常用的就这个方法吧</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * Add a new image/string ID <span class="keyword">to</span> the <span class="built_in">set</span> of images.</span><br><span class="line">     *</span><br><span class="line">     * @param <span class="keyword">state</span>Set - An array of resource Ids <span class="keyword">to</span> associate with the image.</span><br><span class="line">     *                 Switch <span class="keyword">to</span> this image by calling <span class="built_in">set</span>State().</span><br><span class="line">     * @param drawable -The image <span class="keyword">to</span> show.</span><br><span class="line">     */</span><br><span class="line">    public void addState(int[] <span class="keyword">state</span>Set, Drawable drawable) &#123;</span><br><span class="line">        if (drawable != null) &#123;</span><br><span class="line">            mStateListState.addStateSet(<span class="keyword">state</span>Set, drawable);</span><br><span class="line">            // <span class="keyword">in</span> case the new <span class="keyword">state</span> matches our current <span class="keyword">state</span>...</span><br><span class="line">            <span class="keyword">on</span>StateChange(getState());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p> 作用就是给制定state set 添加a new image/string</p>
+<p> 感觉整个drawable的就只流程逻辑相对于View绘制流程而言还是比较简单的。今天就看到这里了。健身搞起！</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/07/03/android-Volley-源码走读/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          android Volley 源码走读
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/06/18/android-View-详解-二/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">android View 详解(二)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-View-不同状态分析" data-title="android View 不同状态分析" data-url="http://canglangwenyue.com/2015/06/21/android-View-不同状态分析/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 季高
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
